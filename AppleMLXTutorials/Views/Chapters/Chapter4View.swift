@@ -1,7 +1,7 @@
 import SwiftUI
 import MLX
 
-/// Chapter 4: 디바이스 관리
+/// Chapter 4: Device Management
 struct Chapter4View: View {
     @State private var output: String = ""
     @State private var isRunning = false
@@ -23,26 +23,26 @@ struct Chapter4View: View {
 
     private var descriptionSection: some View {
         VStack(alignment: .leading, spacing: 16) {
-            Label("개요", systemImage: "info.circle")
+            Label("Overview", systemImage: "info.circle")
                 .font(.title2.bold())
 
             Text("""
-            MLX의 가장 큰 장점 중 하나는 **통합 메모리 모델**입니다.
-            Apple Silicon의 통합 메모리 아키텍처를 활용하여 CPU와 GPU가 메모리를 공유합니다.
+            One of MLX's greatest advantages is the **unified memory model**.
+            Leveraging Apple Silicon's unified memory architecture, CPU and GPU share memory.
 
-            **핵심 개념:**
-            • **통합 메모리** - CPU와 GPU 간 데이터 복사 불필요
-            • **디바이스 선택** - 연산별로 CPU 또는 GPU 선택 가능
-            • **자동 디바이스** - 기본적으로 GPU 우선 사용
+            **Key Concepts:**
+            • **Unified Memory** - No data copying needed between CPU and GPU
+            • **Device Selection** - Choose CPU or GPU per operation
+            • **Automatic Device** - GPU prioritized by default
 
-            **지원 디바이스:**
-            • `.cpu` - CPU에서 연산 실행
-            • `.gpu` - GPU(Metal)에서 연산 실행
+            **Supported Devices:**
+            • `.cpu` - Run operations on CPU
+            • `.gpu` - Run operations on GPU (Metal)
 
-            **장점:**
-            • 대용량 모델도 시스템 메모리 전체 활용 가능
-            • 데이터 전송 오버헤드 없음
-            • PyTorch/TensorFlow 대비 메모리 효율성 향상
+            **Benefits:**
+            • Large models can utilize entire system memory
+            • No data transfer overhead
+            • Improved memory efficiency compared to PyTorch/TensorFlow
             """)
             .font(.body)
             .textSelection(.enabled)
@@ -53,10 +53,10 @@ struct Chapter4View: View {
 
     private var codeSection: some View {
         VStack(alignment: .leading, spacing: 16) {
-            Label("코드 예제", systemImage: "chevron.left.forwardslash.chevron.right")
+            Label("Code Example", systemImage: "chevron.left.forwardslash.chevron.right")
                 .font(.title2.bold())
 
-            Text("**디바이스 확인 및 선택:**")
+            Text("**Device Checking and Selection:**")
                 .font(.headline)
 
             CodeBlockView(code: """
@@ -73,7 +73,7 @@ struct Chapter4View: View {
                 let gpuArray = MLXArray([1, 2, 3])  // 기본 디바이스(GPU)
                 """)
 
-            Text("**스트림과 동기화:**")
+            Text("**Streams and Synchronization:**")
                 .font(.headline)
                 .padding(.top, 8)
 
@@ -92,7 +92,7 @@ struct Chapter4View: View {
                 eval(a, b, c)
                 """)
 
-            Text("**메모리 관리:**")
+            Text("**Memory Management:**")
                 .font(.headline)
                 .padding(.top, 8)
 
@@ -118,12 +118,12 @@ struct Chapter4View: View {
 
     private var runSection: some View {
         VStack(alignment: .leading, spacing: 16) {
-            Label("실행 결과", systemImage: "play.circle")
+            Label("Run Result", systemImage: "play.circle")
                 .font(.title2.bold())
 
             HStack(spacing: 16) {
                 Button(action: runExample) {
-                    Label("실행", systemImage: "play.fill")
+                    Label("Run", systemImage: "play.fill")
                 }
                 .buttonStyle(.borderedProminent)
                 .disabled(isRunning)
@@ -136,7 +136,7 @@ struct Chapter4View: View {
 
             GroupBox {
                 if output.isEmpty {
-                    Text("실행 버튼을 눌러 결과를 확인하세요.")
+                    Text("Press the Run button to see results.")
                         .foregroundStyle(.secondary)
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .padding()

@@ -24,28 +24,28 @@ struct Chapter6View: View {
 
     private var descriptionSection: some View {
         VStack(alignment: .leading, spacing: 16) {
-            Label("개요", systemImage: "info.circle")
+            Label("Overview", systemImage: "info.circle")
                 .font(.title2.bold())
 
             Text("""
-            **MLXNN**은 신경망 구축을 위한 고수준 모듈을 제공합니다.
-            PyTorch의 torch.nn과 유사한 API를 가집니다.
+            **MLXNN** provides high-level modules for building neural networks.
+            It has an API similar to PyTorch's torch.nn.
 
-            **핵심 컴포넌트:**
-            • **Module** - 모든 신경망 레이어의 기본 클래스
-            • **Linear** - 완전 연결 레이어 (Fully Connected)
-            • **Embedding** - 임베딩 레이어
-            • **Conv2d** - 2D 컨볼루션 레이어
+            **Core Components:**
+            • **Module** - Base class for all neural network layers
+            • **Linear** - Fully connected layer
+            • **Embedding** - Embedding layer
+            • **Conv2d** - 2D convolution layer
 
-            **Module 프로토콜:**
-            • `callAsFunction(_:)` - 순전파 수행
-            • `parameters()` - 학습 가능한 파라미터 반환
-            • `update(parameters:)` - 파라미터 업데이트
+            **Module Protocol:**
+            • `callAsFunction(_:)` - Performs forward pass
+            • `parameters()` - Returns trainable parameters
+            • `update(parameters:)` - Updates parameters
 
-            **레이어 종류:**
-            • 선형 레이어: Linear
-            • 활성화: ReLU, GELU, SiLU, Sigmoid
-            • 정규화: LayerNorm, RMSNorm, BatchNorm
+            **Layer Types:**
+            • Linear layers: Linear
+            • Activations: ReLU, GELU, SiLU, Sigmoid
+            • Normalization: LayerNorm, RMSNorm, BatchNorm
             • Attention: MultiHeadAttention
             """)
             .font(.body)
@@ -57,7 +57,7 @@ struct Chapter6View: View {
 
     private var codeSection: some View {
         VStack(alignment: .leading, spacing: 16) {
-            Label("코드 예제", systemImage: "chevron.left.forwardslash.chevron.right")
+            Label("Code Example", systemImage: "chevron.left.forwardslash.chevron.right")
                 .font(.title2.bold())
 
             Text("**Linear 레이어:**")
@@ -143,12 +143,12 @@ struct Chapter6View: View {
 
     private var runSection: some View {
         VStack(alignment: .leading, spacing: 16) {
-            Label("실행 결과", systemImage: "play.circle")
+            Label("Run Result", systemImage: "play.circle")
                 .font(.title2.bold())
 
             HStack(spacing: 16) {
                 Button(action: runExample) {
-                    Label("실행", systemImage: "play.fill")
+                    Label("Run", systemImage: "play.fill")
                 }
                 .buttonStyle(.borderedProminent)
                 .disabled(isRunning)
@@ -161,7 +161,7 @@ struct Chapter6View: View {
 
             GroupBox {
                 if output.isEmpty {
-                    Text("실행 버튼을 눌러 결과를 확인하세요.")
+                    Text("Press the Run button to see results.")
                         .foregroundStyle(.secondary)
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .padding()

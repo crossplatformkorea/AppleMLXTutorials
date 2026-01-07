@@ -14,7 +14,7 @@ final class VLMManager: ObservableObject {
     @Published var isLoaded = false
     @Published var isLoading = false
     @Published var downloadProgress: Double = 0
-    @Published var statusMessage: String = "모델을 다운로드하세요"
+    @Published var statusMessage: String = "Please download the model"
 
     private var currentModelName: String?
 
@@ -36,7 +36,7 @@ final class VLMManager: ObservableObject {
 
         isLoading = true
         downloadProgress = 0
-        statusMessage = "모델 다운로드 중..."
+        statusMessage = "Downloading model..."
         currentModelName = configuration.name
 
         do {
@@ -51,10 +51,10 @@ final class VLMManager: ObservableObject {
             modelContainer = container
             isLoaded = true
             isLoading = false
-            statusMessage = "✓ VLM 모델 준비 완료"
+            statusMessage = "✓ VLM Model Ready"
         } catch {
             isLoading = false
-            statusMessage = "✗ 오류: \(error.localizedDescription)"
+            statusMessage = "✗ Error: \(error.localizedDescription)"
         }
     }
 }
@@ -95,21 +95,21 @@ struct Chapter12View: View {
 
     private var descriptionSection: some View {
         VStack(alignment: .leading, spacing: 16) {
-            Label("개요", systemImage: "info.circle")
+            Label("Overview", systemImage: "info.circle")
                 .font(.title2.bold())
 
             Text("""
-            **비전 언어 모델(VLM)**은 이미지와 텍스트를 함께 이해하는 멀티모달 모델입니다.
+            **Vision Language Models (VLM)** are multimodal models that understand both images and text together.
 
-            **이 챕터에서 할 수 있는 것:**
-            • VLM 모델 다운로드 및 로드
-            • 이미지 업로드 및 분석
-            • 이미지에 대한 질문/답변
+            **What you can do in this chapter:**
+            - Download and load VLM models
+            - Upload and analyze images
+            - Ask questions about images
 
-            **활용 예시:**
-            • 사진 설명 생성
-            • 이미지 내 객체 인식
-            • 문서/차트 분석
+            **Use cases:**
+            - Generate photo descriptions
+            - Recognize objects in images
+            - Analyze documents/charts
             """)
             .font(.body)
             .textSelection(.enabled)
@@ -139,7 +139,7 @@ struct Chapter12View: View {
             HStack(spacing: 16) {
                 Button(action: loadModel) {
                     Label(
-                        vlmManager.isLoaded ? "모델 준비 완료" : "모델 다운로드",
+                        vlmManager.isLoaded ? "Model Ready" : "Download Model",
                         systemImage: vlmManager.isLoaded ? "checkmark.circle" : "arrow.down.circle"
                     )
                 }
@@ -150,7 +150,7 @@ struct Chapter12View: View {
                     VStack(alignment: .leading, spacing: 4) {
                         ProgressView(value: vlmManager.downloadProgress)
                             .frame(width: 150)
-                        Text("\(Int(vlmManager.downloadProgress * 100))% 다운로드 중...")
+                        Text("\(Int(vlmManager.downloadProgress * 100))% Downloading...")
                             .font(.caption)
                             .foregroundStyle(.secondary)
                     }
@@ -178,7 +178,7 @@ struct Chapter12View: View {
 
             HStack(spacing: 16) {
                 Button(action: selectImage) {
-                    Label("이미지 선택", systemImage: "folder")
+                    Label("Select Image", systemImage: "folder")
                 }
                 .buttonStyle(.bordered)
                 .disabled(!vlmManager.isLoaded || isGenerating)
@@ -191,7 +191,7 @@ struct Chapter12View: View {
 
                 if selectedImage != nil {
                     Button(action: { selectedImage = nil }) {
-                        Label("지우기", systemImage: "trash")
+                        Label("Clear", systemImage: "trash")
                     }
                     .buttonStyle(.bordered)
                 }
@@ -209,7 +209,7 @@ struct Chapter12View: View {
                         Image(systemName: "photo.badge.plus")
                             .font(.largeTitle)
                             .foregroundStyle(.secondary)
-                        Text(vlmManager.isLoaded ? "이미지를 선택하거나 샘플 이미지를 사용하세요." : "먼저 모델을 다운로드하세요.")
+                        Text(vlmManager.isLoaded ? "Select an image or use a sample image." : "Please download the model first.")
                             .foregroundStyle(.secondary)
                     }
                     .frame(maxWidth: .infinity)
@@ -237,7 +237,7 @@ struct Chapter12View: View {
                 .disabled(!vlmManager.isLoaded || isGenerating)
 
             HStack(spacing: 8) {
-                Text("예시:")
+                Text("Examples:")
                     .font(.caption)
                     .foregroundStyle(.secondary)
 
@@ -269,7 +269,7 @@ struct Chapter12View: View {
 
             HStack(spacing: 16) {
                 Button(action: analyzeImage) {
-                    Label("이미지 분석", systemImage: "sparkles")
+                    Label("Analyze", systemImage: "sparkles")
                 }
                 .buttonStyle(.borderedProminent)
                 .tint(.blue)
@@ -278,7 +278,7 @@ struct Chapter12View: View {
                 if isGenerating {
                     ProgressView()
                         .scaleEffect(0.8)
-                    Text("분석 중...")
+                    Text("Analyzing...")
                         .foregroundStyle(.secondary)
                 }
             }
@@ -297,12 +297,12 @@ struct Chapter12View: View {
 
                 if !output.isEmpty {
                     Button(action: copyOutput) {
-                        Label("복사", systemImage: "doc.on.doc")
+                        Label("Copy", systemImage: "doc.on.doc")
                     }
                     .buttonStyle(.bordered)
 
                     Button(action: { output = "" }) {
-                        Label("지우기", systemImage: "trash")
+                        Label("Clear", systemImage: "trash")
                     }
                     .buttonStyle(.bordered)
                 }
@@ -315,7 +315,7 @@ struct Chapter12View: View {
                             Image(systemName: "text.cursor")
                                 .font(.largeTitle)
                                 .foregroundStyle(.secondary)
-                            Text("이미지를 선택하고 '이미지 분석' 버튼을 누르세요.")
+                            Text("Select an image and press the 'Analyze' button.")
                                 .foregroundStyle(.secondary)
                         }
                         .frame(maxWidth: .infinity)
@@ -440,7 +440,7 @@ struct Chapter12View: View {
                 }
             } catch {
                 await MainActor.run {
-                    output = "오류 발생: \(error.localizedDescription)"
+                    output = "Error occurred: \(error.localizedDescription)"
                     isGenerating = false
                 }
             }

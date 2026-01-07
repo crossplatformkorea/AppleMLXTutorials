@@ -24,30 +24,30 @@ struct Chapter9View: View {
 
     private var descriptionSection: some View {
         VStack(alignment: .leading, spacing: 16) {
-            Label("개요", systemImage: "info.circle")
+            Label("Overview", systemImage: "info.circle")
                 .font(.title2.bold())
 
             Text("""
-            학습된 모델을 저장하고 불러오는 것은 실제 애플리케이션에서 필수입니다.
+            Saving and loading trained models is essential for real-world applications.
 
-            **저장 형식:**
-            • **safetensors** - 권장, 안전하고 빠름
-            • **npz** - NumPy 호환
-            • **gguf** - LLM 모델에서 자주 사용
+            **Save Formats:**
+            • **safetensors** - Recommended, safe and fast
+            • **npz** - NumPy compatible
+            • **gguf** - Commonly used for LLM models
 
-            **저장 대상:**
-            • 모델 파라미터 (가중치, 편향)
-            • 옵티마이저 상태 (모멘텀 등)
-            • 학습 체크포인트
+            **What to Save:**
+            • Model parameters (weights, biases)
+            • Optimizer state (momentum, etc.)
+            • Training checkpoints
 
-            **MLX 저장 API:**
-            • `save(arrays:url:)` - safetensors로 저장
-            • `loadArrays(url:)` - 파일에서 로드
-            • `Module.parameters()` - 파라미터 딕셔너리
+            **MLX Save API:**
+            • `save(arrays:url:)` - Save as safetensors
+            • `loadArrays(url:)` - Load from file
+            • `Module.parameters()` - Parameter dictionary
 
-            **체크포인트:**
-            학습 중간에 모델을 저장하여 나중에 재개하거나
-            최고 성능 모델을 보존할 수 있습니다.
+            **Checkpoints:**
+            Save models during training to resume later or
+            preserve the best performing model.
             """)
             .font(.body)
             .textSelection(.enabled)
@@ -58,7 +58,7 @@ struct Chapter9View: View {
 
     private var codeSection: some View {
         VStack(alignment: .leading, spacing: 16) {
-            Label("코드 예제", systemImage: "chevron.left.forwardslash.chevron.right")
+            Label("Code Example", systemImage: "chevron.left.forwardslash.chevron.right")
                 .font(.title2.bold())
 
             Text("**모델 파라미터 저장:**")
@@ -160,12 +160,12 @@ struct Chapter9View: View {
 
     private var runSection: some View {
         VStack(alignment: .leading, spacing: 16) {
-            Label("실행 결과", systemImage: "play.circle")
+            Label("Run Result", systemImage: "play.circle")
                 .font(.title2.bold())
 
             HStack(spacing: 16) {
                 Button(action: runExample) {
-                    Label("실행", systemImage: "play.fill")
+                    Label("Run", systemImage: "play.fill")
                 }
                 .buttonStyle(.borderedProminent)
                 .disabled(isRunning)
@@ -178,7 +178,7 @@ struct Chapter9View: View {
 
             GroupBox {
                 if output.isEmpty {
-                    Text("실행 버튼을 눌러 결과를 확인하세요.")
+                    Text("Press the Run button to see results.")
                         .foregroundStyle(.secondary)
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .padding()

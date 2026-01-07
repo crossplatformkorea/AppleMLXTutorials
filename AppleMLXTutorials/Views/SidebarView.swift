@@ -30,7 +30,7 @@ struct SidebarView: View {
         }
         .listStyle(.sidebar)
         .navigationTitle("MLX Swift")
-        .navigationSubtitle("Machine Learning Tutorial")
+        .navigationSubtitle(String(localized: "Machine Learning Tutorial"))
     }
 }
 

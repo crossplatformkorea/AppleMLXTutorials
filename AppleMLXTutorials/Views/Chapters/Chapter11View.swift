@@ -11,7 +11,7 @@ struct Chapter11View: View {
     @State private var isGenerating = false
     @State private var modelLoaded = false
     @State private var downloadProgress: Double = 0
-    @State private var statusMessage: String = "모델을 다운로드하세요"
+    @State private var statusMessage: String = "Please download the model"
     @State private var selectedModelIndex: Int = 1  // 기본값: Qwen2.5 (한국어 지원)
 
     @State private var llmModel: ModelContainer?
@@ -42,18 +42,18 @@ struct Chapter11View: View {
 
     private var descriptionSection: some View {
         VStack(alignment: .leading, spacing: 16) {
-            Label("개요", systemImage: "info.circle")
+            Label("Overview", systemImage: "info.circle")
                 .font(.title2.bold())
 
             Text("""
-            **MLXLLM**을 사용하여 Apple Silicon에서 대형 언어 모델을 실행합니다.
+            Run large language models on Apple Silicon using **MLXLLM**.
 
-            **이 챕터에서 할 수 있는 것:**
-            • Hugging Face에서 모델 자동 다운로드
-            • 로컬에서 AI 텍스트 생성
-            • 다양한 모델 선택 및 비교
+            **What you can do in this chapter:**
+            - Auto-download models from Hugging Face
+            - Generate AI text locally
+            - Select and compare various models
 
-            **참고:** 첫 실행 시 모델 다운로드가 필요합니다 (인터넷 연결 필요).
+            **Note:** Model download is required on first run (internet connection needed).
             """)
             .font(.body)
             .textSelection(.enabled)
@@ -86,7 +86,7 @@ struct Chapter11View: View {
             HStack(spacing: 16) {
                 Button(action: loadModel) {
                     Label(
-                        modelLoaded ? "모델 교체" : "모델 다운로드",
+                        modelLoaded ? "Replace Model" : "Download Model",
                         systemImage: modelLoaded ? "arrow.triangle.2.circlepath" : "arrow.down.circle"
                     )
                 }
@@ -97,7 +97,7 @@ struct Chapter11View: View {
                     VStack(alignment: .leading, spacing: 4) {
                         ProgressView(value: downloadProgress)
                             .frame(width: 150)
-                        Text("\(Int(downloadProgress * 100))% 다운로드 중...")
+                        Text("\(Int(downloadProgress * 100))% Downloading...")
                             .font(.caption)
                             .foregroundStyle(.secondary)
                     }
@@ -135,23 +135,23 @@ struct Chapter11View: View {
 
             // 예시 프롬프트 버튼들
             HStack(spacing: 8) {
-                Text("예시:")
+                Text("Examples:")
                     .font(.caption)
                     .foregroundStyle(.secondary)
 
-                Button("한국어 질문") {
+                Button("Korean Question") {
                     prompt = "대한민국의 수도와 인구에 대해 알려주세요."
                 }
                 .buttonStyle(.bordered)
                 .controlSize(.small)
 
-                Button("코드 요청") {
+                Button("Code Request") {
                     prompt = "Swift에서 배열을 정렬하는 방법을 코드로 보여주세요."
                 }
                 .buttonStyle(.bordered)
                 .controlSize(.small)
 
-                Button("창의적 글쓰기") {
+                Button("Creative Writing") {
                     prompt = "봄날의 벚꽃에 대한 짧은 시를 써주세요."
                 }
                 .buttonStyle(.bordered)
@@ -162,7 +162,7 @@ struct Chapter11View: View {
             // 생성 버튼
             HStack(spacing: 16) {
                 Button(action: generateText) {
-                    Label("텍스트 생성", systemImage: "sparkles")
+                    Label("Generate Text", systemImage: "sparkles")
                 }
                 .buttonStyle(.borderedProminent)
                 .tint(.green)
@@ -171,10 +171,10 @@ struct Chapter11View: View {
                 if isGenerating {
                     ProgressView()
                         .scaleEffect(0.8)
-                    Text("생성 중...")
+                    Text("Generating...")
                         .foregroundStyle(.secondary)
 
-                    Button("중지") {
+                    Button("Stop") {
                         // TODO: 취소 기능
                     }
                     .buttonStyle(.bordered)
@@ -196,12 +196,12 @@ struct Chapter11View: View {
 
                 if !output.isEmpty {
                     Button(action: copyOutput) {
-                        Label("복사", systemImage: "doc.on.doc")
+                        Label("Copy", systemImage: "doc.on.doc")
                     }
                     .buttonStyle(.bordered)
 
                     Button(action: { output = "" }) {
-                        Label("지우기", systemImage: "trash")
+                        Label("Clear", systemImage: "trash")
                     }
                     .buttonStyle(.bordered)
                 }
@@ -214,7 +214,7 @@ struct Chapter11View: View {
                             Image(systemName: modelLoaded ? "text.cursor" : "arrow.down.circle")
                                 .font(.largeTitle)
                                 .foregroundStyle(.secondary)
-                            Text(modelLoaded ? "프롬프트를 입력하고 '텍스트 생성' 버튼을 누르세요." : "먼저 위에서 모델을 다운로드하세요.")
+                            Text(modelLoaded ? "Enter a prompt and press 'Generate Text' button." : "Please download the model above first.")
                                 .foregroundStyle(.secondary)
                         }
                         .frame(maxWidth: .infinity)
@@ -237,7 +237,7 @@ struct Chapter11View: View {
     private func loadModel() {
         isLoading = true
         downloadProgress = 0
-        statusMessage = "모델 정보 확인 중..."
+        statusMessage = "Checking model info..."
         modelLoaded = false
         llmModel = nil
 
@@ -247,7 +247,7 @@ struct Chapter11View: View {
             do {
                 let config = ModelConfiguration(id: selectedModel.id)
 
-                statusMessage = "다운로드 중: \(selectedModel.name)..."
+                statusMessage = "Downloading: \(selectedModel.name)..."
 
                 let container = try await LLMModelFactory.shared.loadContainer(
                     configuration: config
@@ -261,12 +261,12 @@ struct Chapter11View: View {
                     llmModel = container
                     modelLoaded = true
                     isLoading = false
-                    statusMessage = "✓ 모델 준비 완료: \(selectedModel.name)"
+                    statusMessage = "✓ Model Ready: \(selectedModel.name)"
                 }
             } catch {
                 await MainActor.run {
                     isLoading = false
-                    statusMessage = "✗ 오류: \(error.localizedDescription)"
+                    statusMessage = "✗ Error: \(error.localizedDescription)"
                 }
             }
         }
@@ -319,7 +319,7 @@ struct Chapter11View: View {
                 }
             } catch {
                 await MainActor.run {
-                    output = "오류 발생: \(error.localizedDescription)"
+                    output = "Error occurred: \(error.localizedDescription)"
                     isGenerating = false
                 }
             }

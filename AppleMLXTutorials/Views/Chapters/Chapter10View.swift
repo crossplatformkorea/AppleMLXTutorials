@@ -27,31 +27,31 @@ struct Chapter10View: View {
 
     private var descriptionSection: some View {
         VStack(alignment: .leading, spacing: 16) {
-            Label("개요", systemImage: "info.circle")
+            Label("Overview", systemImage: "info.circle")
                 .font(.title2.bold())
 
             Text("""
-            MNIST는 손글씨 숫자(0-9) 분류를 위한 클래식한 데이터셋입니다.
-            이 챕터에서는 지금까지 배운 내용을 종합하여 실제 분류 모델을 학습합니다.
+            MNIST is a classic dataset for handwritten digit (0-9) classification.
+            In this chapter, we combine everything learned so far to train a real classification model.
 
-            **데이터셋:**
-            • 28x28 픽셀 흑백 이미지
-            • 60,000개 학습 이미지
-            • 10,000개 테스트 이미지
-            • 10개 클래스 (0-9)
+            **Dataset:**
+            • 28x28 pixel grayscale images
+            • 60,000 training images
+            • 10,000 test images
+            • 10 classes (0-9)
 
-            **모델 구조:**
-            • 입력: 784 (28x28 평탄화)
-            • 은닉층: 256 -> 128
-            • 출력: 10 (클래스 확률)
+            **Model Architecture:**
+            • Input: 784 (28x28 flattened)
+            • Hidden layers: 256 -> 128
+            • Output: 10 (class probabilities)
 
-            **학습 과정:**
-            1. 데이터 로드 및 전처리
-            2. 모델 정의 (MLP)
-            3. 손실 함수 (Cross-Entropy)
-            4. 옵티마이저 (Adam)
-            5. 학습 루프 실행
-            6. 평가 및 정확도 측정
+            **Training Process:**
+            1. Load and preprocess data
+            2. Define model (MLP)
+            3. Loss function (Cross-Entropy)
+            4. Optimizer (Adam)
+            5. Run training loop
+            6. Evaluate and measure accuracy
             """)
             .font(.body)
             .textSelection(.enabled)
@@ -62,7 +62,7 @@ struct Chapter10View: View {
 
     private var codeSection: some View {
         VStack(alignment: .leading, spacing: 16) {
-            Label("코드 예제", systemImage: "chevron.left.forwardslash.chevron.right")
+            Label("Code Example", systemImage: "chevron.left.forwardslash.chevron.right")
                 .font(.title2.bold())
 
             Text("**MLP 모델 정의:**")
@@ -149,10 +149,10 @@ struct Chapter10View: View {
 
     private var runSection: some View {
         VStack(alignment: .leading, spacing: 16) {
-            Label("실행 결과", systemImage: "play.circle")
+            Label("Run Result", systemImage: "play.circle")
                 .font(.title2.bold())
 
-            Text("참고: 실제 MNIST 데이터셋은 별도로 다운로드해야 합니다. 여기서는 합성 데이터로 학습 과정을 시연합니다.")
+            Text("Note: The actual MNIST dataset needs to be downloaded separately. Here we demonstrate the training process with synthetic data.")
                 .font(.caption)
                 .foregroundStyle(.secondary)
 
@@ -173,7 +173,7 @@ struct Chapter10View: View {
 
             GroupBox {
                 if output.isEmpty {
-                    Text("실행 버튼을 눌러 학습을 시작하세요.")
+                    Text("Press the Run button to start training.")
                         .foregroundStyle(.secondary)
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .padding()

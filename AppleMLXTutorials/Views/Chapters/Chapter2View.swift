@@ -1,7 +1,7 @@
 import SwiftUI
 import MLX
 
-/// Chapter 2: 배열 기초
+/// Chapter 2: Array Basics
 struct Chapter2View: View {
     @State private var output: String = ""
     @State private var isRunning = false
@@ -23,24 +23,24 @@ struct Chapter2View: View {
 
     private var descriptionSection: some View {
         VStack(alignment: .leading, spacing: 16) {
-            Label("개요", systemImage: "info.circle")
+            Label("Overview", systemImage: "info.circle")
                 .font(.title2.bold())
 
             Text("""
-            `MLXArray`는 MLX의 핵심 데이터 구조입니다.
-            NumPy의 ndarray와 유사하게 다차원 배열을 표현합니다.
+            `MLXArray` is the core data structure of MLX.
+            Similar to NumPy's ndarray, it represents multi-dimensional arrays.
 
-            **주요 특징:**
-            • 다양한 데이터 타입 지원 (Float32, Int32, Bool 등)
-            • 다차원 배열 (스칼라, 벡터, 행렬, 텐서)
-            • 지연 계산 - `eval()` 호출 시 실제 계산 수행
-            • 브로드캐스팅 지원
+            **Key Features:**
+            • Support for various data types (Float32, Int32, Bool, etc.)
+            • Multi-dimensional arrays (scalars, vectors, matrices, tensors)
+            • Lazy evaluation - actual computation performed when `eval()` is called
+            • Broadcasting support
 
-            **데이터 타입:**
-            • `.float32`, `.float16`, `.bfloat16` - 부동소수점
-            • `.int32`, `.int64`, `.uint32` - 정수
-            • `.bool` - 불리언
-            • `.complex64` - 복소수
+            **Data Types:**
+            • `.float32`, `.float16`, `.bfloat16` - Floating point
+            • `.int32`, `.int64`, `.uint32` - Integers
+            • `.bool` - Boolean
+            • `.complex64` - Complex numbers
             """)
             .font(.body)
             .textSelection(.enabled)
@@ -51,10 +51,10 @@ struct Chapter2View: View {
 
     private var codeSection: some View {
         VStack(alignment: .leading, spacing: 16) {
-            Label("코드 예제", systemImage: "chevron.left.forwardslash.chevron.right")
+            Label("Code Example", systemImage: "chevron.left.forwardslash.chevron.right")
                 .font(.title2.bold())
 
-            Text("**배열 생성 방법:**")
+            Text("**Array Creation Methods:**")
                 .font(.headline)
 
             CodeBlockView(code: """
@@ -81,7 +81,7 @@ struct Chapter2View: View {
                 let ints = MLXArray([1.5, 2.5], dtype: .int32)  // [1, 2]
                 """)
 
-            Text("**배열 속성:**")
+            Text("**Array Properties:**")
                 .font(.headline)
                 .padding(.top, 8)
 
@@ -100,12 +100,12 @@ struct Chapter2View: View {
 
     private var runSection: some View {
         VStack(alignment: .leading, spacing: 16) {
-            Label("실행 결과", systemImage: "play.circle")
+            Label("Run Result", systemImage: "play.circle")
                 .font(.title2.bold())
 
             HStack(spacing: 16) {
                 Button(action: runExample) {
-                    Label("실행", systemImage: "play.fill")
+                    Label("Run", systemImage: "play.fill")
                 }
                 .buttonStyle(.borderedProminent)
                 .disabled(isRunning)
@@ -118,7 +118,7 @@ struct Chapter2View: View {
 
             GroupBox {
                 if output.isEmpty {
-                    Text("실행 버튼을 눌러 결과를 확인하세요.")
+                    Text("Press the Run button to see results.")
                         .foregroundStyle(.secondary)
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .padding()

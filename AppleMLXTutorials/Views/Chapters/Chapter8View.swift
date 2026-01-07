@@ -25,29 +25,29 @@ struct Chapter8View: View {
 
     private var descriptionSection: some View {
         VStack(alignment: .leading, spacing: 16) {
-            Label("개요", systemImage: "info.circle")
+            Label("Overview", systemImage: "info.circle")
                 .font(.title2.bold())
 
             Text("""
-            **옵티마이저**는 그래디언트를 사용하여 모델 파라미터를 업데이트합니다.
+            **Optimizers** use gradients to update model parameters.
 
-            **MLXOptimizers 제공 옵티마이저:**
-            • **SGD** - 확률적 경사 하강법
-            • **Adam** - 가장 널리 사용되는 옵티마이저
-            • **AdamW** - Weight Decay가 추가된 Adam
-            • **Adagrad** - 적응형 학습률
-            • **RMSprop** - 이동 평균 기반
+            **Optimizers provided by MLXOptimizers:**
+            • **SGD** - Stochastic Gradient Descent
+            • **Adam** - Most widely used optimizer
+            • **AdamW** - Adam with Weight Decay
+            • **Adagrad** - Adaptive learning rate
+            • **RMSprop** - Moving average based
 
-            **핵심 개념:**
-            • **학습률 (Learning Rate)** - 업데이트 크기 조절
-            • **모멘텀** - 이전 그래디언트 방향 유지
-            • **Weight Decay** - 과적합 방지를 위한 정규화
+            **Key Concepts:**
+            • **Learning Rate** - Controls update magnitude
+            • **Momentum** - Maintains previous gradient direction
+            • **Weight Decay** - Regularization to prevent overfitting
 
-            **학습률 스케줄링:**
-            • 고정 학습률
-            • 스텝 감소
-            • 코사인 어닐링
-            • 웜업 + 감소
+            **Learning Rate Scheduling:**
+            • Fixed learning rate
+            • Step decay
+            • Cosine annealing
+            • Warmup + decay
             """)
             .font(.body)
             .textSelection(.enabled)
@@ -58,7 +58,7 @@ struct Chapter8View: View {
 
     private var codeSection: some View {
         VStack(alignment: .leading, spacing: 16) {
-            Label("코드 예제", systemImage: "chevron.left.forwardslash.chevron.right")
+            Label("Code Example", systemImage: "chevron.left.forwardslash.chevron.right")
                 .font(.title2.bold())
 
             Text("**기본 옵티마이저 사용:**")
@@ -154,12 +154,12 @@ struct Chapter8View: View {
 
     private var runSection: some View {
         VStack(alignment: .leading, spacing: 16) {
-            Label("실행 결과", systemImage: "play.circle")
+            Label("Run Result", systemImage: "play.circle")
                 .font(.title2.bold())
 
             HStack(spacing: 16) {
                 Button(action: runExample) {
-                    Label("실행", systemImage: "play.fill")
+                    Label("Run", systemImage: "play.fill")
                 }
                 .buttonStyle(.borderedProminent)
                 .disabled(isRunning)
@@ -172,7 +172,7 @@ struct Chapter8View: View {
 
             GroupBox {
                 if output.isEmpty {
-                    Text("실행 버튼을 눌러 결과를 확인하세요.")
+                    Text("Press the Run button to see results.")
                         .foregroundStyle(.secondary)
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .padding()

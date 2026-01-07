@@ -1,7 +1,7 @@
 import SwiftUI
 import MLX
 
-/// Chapter 3: 배열 연산
+/// Chapter 3: Array Operations
 struct Chapter3View: View {
     @State private var output: String = ""
     @State private var isRunning = false
@@ -23,31 +23,31 @@ struct Chapter3View: View {
 
     private var descriptionSection: some View {
         VStack(alignment: .leading, spacing: 16) {
-            Label("개요", systemImage: "info.circle")
+            Label("Overview", systemImage: "info.circle")
                 .font(.title2.bold())
 
             Text("""
-            MLX는 NumPy와 유사한 풍부한 배열 연산을 제공합니다.
+            MLX provides rich array operations similar to NumPy.
 
-            **산술 연산:**
-            • 덧셈, 뺄셈, 곱셈, 나눗셈
-            • 요소별(element-wise) 연산
-            • 브로드캐스팅 지원
+            **Arithmetic Operations:**
+            • Addition, subtraction, multiplication, division
+            • Element-wise operations
+            • Broadcasting support
 
-            **수학 함수:**
+            **Math Functions:**
             • `exp`, `log`, `sqrt`, `abs`
             • `sin`, `cos`, `tan`
             • `power`, `square`
 
-            **집계(Reduce) 연산:**
+            **Reduce Operations:**
             • `sum`, `mean`, `prod`
             • `min`, `max`
             • `argMax`, `argMin`
 
-            **형태 변환:**
-            • `reshape` - 형태 변경
-            • `transpose` - 전치
-            • `flatten` - 1차원으로 펼치기
+            **Shape Transformations:**
+            • `reshape` - Change shape
+            • `transpose` - Transpose
+            • `flatten` - Flatten to 1D
             """)
             .font(.body)
             .textSelection(.enabled)
@@ -58,10 +58,10 @@ struct Chapter3View: View {
 
     private var codeSection: some View {
         VStack(alignment: .leading, spacing: 16) {
-            Label("코드 예제", systemImage: "chevron.left.forwardslash.chevron.right")
+            Label("Code Example", systemImage: "chevron.left.forwardslash.chevron.right")
                 .font(.title2.bold())
 
-            Text("**산술 연산:**")
+            Text("**Arithmetic Operations:**")
                 .font(.headline)
 
             CodeBlockView(code: """
@@ -81,7 +81,7 @@ struct Chapter3View: View {
                 let shifted = a + 10     // [11, 12, 13, 14]
                 """)
 
-            Text("**수학 함수:**")
+            Text("**Math Functions:**")
                 .font(.headline)
                 .padding(.top, 8)
 
@@ -98,7 +98,7 @@ struct Chapter3View: View {
                 let sinX = sin(angles)   // [0, 1, 0]
                 """)
 
-            Text("**집계 연산:**")
+            Text("**Reduce Operations:**")
                 .font(.headline)
                 .padding(.top, 8)
 
@@ -124,12 +124,12 @@ struct Chapter3View: View {
 
     private var runSection: some View {
         VStack(alignment: .leading, spacing: 16) {
-            Label("실행 결과", systemImage: "play.circle")
+            Label("Run Result", systemImage: "play.circle")
                 .font(.title2.bold())
 
             HStack(spacing: 16) {
                 Button(action: runExample) {
-                    Label("실행", systemImage: "play.fill")
+                    Label("Run", systemImage: "play.fill")
                 }
                 .buttonStyle(.borderedProminent)
                 .disabled(isRunning)
@@ -142,7 +142,7 @@ struct Chapter3View: View {
 
             GroupBox {
                 if output.isEmpty {
-                    Text("실행 버튼을 눌러 결과를 확인하세요.")
+                    Text("Press the Run button to see results.")
                         .foregroundStyle(.secondary)
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .padding()

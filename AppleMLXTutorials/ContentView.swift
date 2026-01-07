@@ -12,9 +12,9 @@ struct ContentView: View {
                     ChapterDetailView(chapter: chapter)
                 } else {
                     ContentUnavailableView(
-                        "챕터를 선택하세요",
+                        "Select a Chapter",
                         systemImage: "book.closed",
-                        description: Text("왼쪽 사이드바에서 학습할 챕터를 선택해주세요.")
+                        description: Text("Select a chapter from the sidebar to start learning.")
                     )
                 }
             }
@@ -25,7 +25,7 @@ struct ContentView: View {
                 Text("by ")
                     .foregroundStyle(.secondary)
                 +
-                Text("크로스플랫폼 코리아")
+                Text("Cross-Platform Korea")
                     .foregroundStyle(.blue)
             }
             .font(.caption)

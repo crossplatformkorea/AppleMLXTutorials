@@ -12,7 +12,7 @@ final class StableDiffusionManager: ObservableObject {
     @Published var isLoaded = false
     @Published var isLoading = false
     @Published var downloadProgress: Double = 0
-    @Published var statusMessage: String = "모델을 다운로드하세요"
+    @Published var statusMessage: String = "Please download the model"
 
     let configuration = StableDiffusionConfiguration.presetSDXLTurbo
 
@@ -23,7 +23,7 @@ final class StableDiffusionManager: ObservableObject {
 
         isLoading = true
         downloadProgress = 0
-        statusMessage = "모델 다운로드 중..."
+        statusMessage = "Downloading model..."
 
         do {
             // Download model
@@ -33,7 +33,7 @@ final class StableDiffusionManager: ObservableObject {
                 }
             }
 
-            statusMessage = "모델 로딩 중..."
+            statusMessage = "Loading model..."
 
             // Create model container
             let loadConfig = LoadConfiguration(float16: true, quantize: false)
@@ -50,10 +50,10 @@ final class StableDiffusionManager: ObservableObject {
             modelContainer = container
             isLoaded = true
             isLoading = false
-            statusMessage = "✓ SDXL Turbo 모델 준비 완료"
+            statusMessage = "✓ SDXL Turbo Model Ready"
         } catch {
             isLoading = false
-            statusMessage = "✗ 오류: \(error.localizedDescription)"
+            statusMessage = "✗ Error: \(error.localizedDescription)"
         }
     }
 }
@@ -87,21 +87,21 @@ struct Chapter14View: View {
 
     private var descriptionSection: some View {
         VStack(alignment: .leading, spacing: 16) {
-            Label("개요", systemImage: "info.circle")
+            Label("Overview", systemImage: "info.circle")
                 .font(.title2.bold())
 
             Text("""
-            **Stable Diffusion**은 텍스트 프롬프트로 이미지를 생성하는 확산 모델입니다.
+            **Stable Diffusion** is a diffusion model that generates images from text prompts.
 
-            **이 챕터에서 할 수 있는 것:**
-            • SDXL Turbo 모델 다운로드 (약 5GB)
-            • 텍스트 프롬프트로 이미지 생성
-            • Negative Prompt로 원하지 않는 요소 제거
+            **What you can do in this chapter:**
+            - Download SDXL Turbo model (~5GB)
+            - Generate images from text prompts
+            - Remove unwanted elements with Negative Prompt
 
-            **참고:**
-            • 첫 실행 시 모델 다운로드 필요 (약 5GB)
-            • SDXL Turbo는 빠른 생성 속도 (2-4 스텝)
-            • 최소 8GB RAM 권장
+            **Note:**
+            - Model download required on first run (~5GB)
+            - SDXL Turbo offers fast generation (2-4 steps)
+            - Minimum 8GB RAM recommended
             """)
             .font(.body)
             .textSelection(.enabled)
@@ -122,7 +122,7 @@ struct Chapter14View: View {
             HStack(spacing: 16) {
                 Button(action: loadModel) {
                     Label(
-                        modelManager.isLoaded ? "모델 준비 완료" : "모델 다운로드",
+                        modelManager.isLoaded ? "Model Ready" : "Download Model",
                         systemImage: modelManager.isLoaded ? "checkmark.circle" : "arrow.down.circle"
                     )
                 }
@@ -133,7 +133,7 @@ struct Chapter14View: View {
                     VStack(alignment: .leading, spacing: 4) {
                         ProgressView(value: modelManager.downloadProgress)
                             .frame(width: 150)
-                        Text("\(Int(modelManager.downloadProgress * 100))% 다운로드 중...")
+                        Text("\(Int(modelManager.downloadProgress * 100))% Downloading...")
                             .font(.caption)
                             .foregroundStyle(.secondary)
                     }
@@ -191,25 +191,25 @@ struct Chapter14View: View {
 
             // 예시 프롬프트 버튼들
             HStack(spacing: 8) {
-                Text("예시:")
+                Text("Examples:")
                     .font(.caption)
                     .foregroundStyle(.secondary)
 
-                Button("풍경") {
+                Button("Landscape") {
                     prompt = "A serene Japanese garden with cherry blossoms, peaceful, detailed"
                     negativePrompt = "blurry, low quality"
                 }
                 .buttonStyle(.bordered)
                 .controlSize(.small)
 
-                Button("초상화") {
+                Button("Portrait") {
                     prompt = "Portrait of a wise old wizard, fantasy style, detailed, magical"
                     negativePrompt = "blurry, distorted face, bad anatomy"
                 }
                 .buttonStyle(.bordered)
                 .controlSize(.small)
 
-                Button("추상") {
+                Button("Abstract") {
                     prompt = "Abstract colorful geometric patterns, vibrant, modern art"
                     negativePrompt = "realistic, photo"
                 }
@@ -220,7 +220,7 @@ struct Chapter14View: View {
 
             HStack(spacing: 16) {
                 Button(action: generateImage) {
-                    Label("이미지 생성", systemImage: "sparkles")
+                    Label("Generate Image", systemImage: "sparkles")
                 }
                 .buttonStyle(.borderedProminent)
                 .tint(.purple)
@@ -251,17 +251,17 @@ struct Chapter14View: View {
 
                 if generatedImage != nil {
                     Button(action: saveImage) {
-                        Label("저장", systemImage: "square.and.arrow.down")
+                        Label("Save", systemImage: "square.and.arrow.down")
                     }
                     .buttonStyle(.bordered)
 
                     Button(action: copyImage) {
-                        Label("복사", systemImage: "doc.on.doc")
+                        Label("Copy", systemImage: "doc.on.doc")
                     }
                     .buttonStyle(.bordered)
 
                     Button(action: { generatedImage = nil }) {
-                        Label("지우기", systemImage: "trash")
+                        Label("Clear", systemImage: "trash")
                     }
                     .buttonStyle(.bordered)
                 }
@@ -287,7 +287,7 @@ struct Chapter14View: View {
                         Image(systemName: modelManager.isLoaded ? "photo.badge.plus" : "arrow.down.circle")
                             .font(.largeTitle)
                             .foregroundStyle(.secondary)
-                        Text(modelManager.isLoaded ? "프롬프트를 입력하고 '이미지 생성' 버튼을 누르세요." : "먼저 위에서 모델을 다운로드하세요.")
+                        Text(modelManager.isLoaded ? "Enter a prompt and press 'Generate Image' button." : "Please download the model above first.")
                             .foregroundStyle(.secondary)
                     }
                     .frame(maxWidth: .infinity)

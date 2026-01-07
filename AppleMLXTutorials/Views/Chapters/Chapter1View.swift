@@ -1,9 +1,9 @@
 import SwiftUI
 import MLX
 
-/// Chapter 1: MLX 소개
+/// Chapter 1: Introduction to MLX
 struct Chapter1View: View {
-    @State private var statusMessage: String = "테스트 전"
+    @State private var statusMessage: String = "Before test"
     @State private var statusColor: Color = .secondary
     @State private var isTesting = false
 
@@ -31,26 +31,26 @@ struct Chapter1View: View {
 
     private var descriptionSection: some View {
         VStack(alignment: .leading, spacing: 16) {
-            Label("개요", systemImage: "info.circle")
+            Label("Overview", systemImage: "info.circle")
                 .font(.title2.bold())
 
             Text("""
-            **MLX**는 Apple Silicon에서 머신러닝을 위해 설계된 배열 프레임워크입니다.
-            Apple 머신러닝 연구팀에서 개발했으며, NumPy와 유사한 API를 제공합니다.
+            **MLX** is an array framework designed for machine learning on Apple Silicon.
+            Developed by Apple's machine learning research team, it provides a NumPy-like API.
 
-            **핵심 특징:**
-            • **통합 메모리 모델** - CPU와 GPU가 메모리를 공유하여 데이터 복사 불필요
-            • **지연 계산(Lazy Evaluation)** - 배열은 필요할 때만 계산됨
-            • **자동 미분** - 함수 변환을 통한 그래디언트 자동 계산
-            • **다중 디바이스** - CPU, GPU에서 유연하게 연산 실행
+            **Key Features:**
+            • **Unified Memory Model** - CPU and GPU share memory, no data copying needed
+            • **Lazy Evaluation** - Arrays are computed only when needed
+            • **Automatic Differentiation** - Automatic gradient computation through function transforms
+            • **Multi-device** - Flexible computation on CPU and GPU
 
-            **MLX Swift 패키지 구성:**
-            • `MLX` - 핵심 배열 프레임워크
-            • `MLXNN` - 신경망 모듈
-            • `MLXOptimizers` - 최적화 알고리즘
-            • `MLXRandom` - 난수 생성
+            **MLX Swift Package Components:**
+            • `MLX` - Core array framework
+            • `MLXNN` - Neural network modules
+            • `MLXOptimizers` - Optimization algorithms
+            • `MLXRandom` - Random number generation
 
-            **지원 플랫폼:**
+            **Supported Platforms:**
             • macOS 14.0+ (Apple Silicon)
             • iOS 17.0+ (Apple Silicon)
             """)
@@ -63,10 +63,10 @@ struct Chapter1View: View {
 
     private var codeSection: some View {
         VStack(alignment: .leading, spacing: 16) {
-            Label("설치 방법", systemImage: "chevron.left.forwardslash.chevron.right")
+            Label("Installation", systemImage: "chevron.left.forwardslash.chevron.right")
                 .font(.title2.bold())
 
-            Text("**Package.swift에 추가:**")
+            Text("**Add to Package.swift:**")
                 .font(.headline)
 
             CodeBlockView(code: """
@@ -89,7 +89,7 @@ struct Chapter1View: View {
                 )
                 """)
 
-            Text("**기본 사용법:**")
+            Text("**Basic Usage:**")
                 .font(.headline)
                 .padding(.top, 8)
 
@@ -115,12 +115,12 @@ struct Chapter1View: View {
 
     private var runSection: some View {
         VStack(alignment: .leading, spacing: 16) {
-            Label("실행 테스트", systemImage: "play.circle")
+            Label("Run Test", systemImage: "play.circle")
                 .font(.title2.bold())
 
             HStack(spacing: 16) {
                 Button(action: testMLX) {
-                    Label("MLX 테스트", systemImage: "play.fill")
+                    Label("Test MLX", systemImage: "play.fill")
                 }
                 .buttonStyle(.borderedProminent)
                 .disabled(isTesting)
@@ -151,7 +151,7 @@ struct Chapter1View: View {
 
     private func testMLX() {
         isTesting = true
-        statusMessage = "테스트 중..."
+        statusMessage = "Testing..."
         statusColor = .blue
 
         Task {
@@ -169,13 +169,13 @@ struct Chapter1View: View {
 
                 await MainActor.run {
                     statusMessage = """
-                    MLX 테스트 성공!
+                    MLX test successful!
 
-                    배열 a: [1, 2, 3, 4]
-                    배열 b: [5, 6, 7, 8]
-                    합계: \(sum)
+                    Array a: [1, 2, 3, 4]
+                    Array b: [5, 6, 7, 8]
+                    Sum: \(sum)
 
-                    디바이스: \(device)
+                    Device: \(device)
                     """
                     statusColor = .green
                     isTesting = false

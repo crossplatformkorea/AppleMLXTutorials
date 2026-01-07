@@ -20,7 +20,13 @@
       "Bash(cat:*)",
       "Bash(security dump-keychain:*)",
       "Bash(xcrun stapler staple:*)",
-      "Bash(gh release delete:*)"
+      "Bash(gh release delete:*)",
+      "Bash(codesign:*)",
+      "Bash(brew install:*)",
+      "Bash(create-dmg:*)",
+      "Bash(\"AppleMLXTutorials.dmg\" )",
+      "Bash(\"build/Build/Products/Release/AppleMLXTutorials.app\")",
+      "Bash(gh release:*)"
     ]
   }
 }

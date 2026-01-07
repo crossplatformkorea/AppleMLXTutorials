@@ -1,118 +1,131 @@
 import Foundation
+import SwiftUI
 
-/// 튜토리얼 챕터를 나타내는 모델
+/// Tutorial chapter model
 struct Chapter: Identifiable, Hashable {
     let id: Int
-    let title: String
-    let subtitle: String
+    let titleKey: String
+    let subtitleKey: String
     let icon: String
-    let description: String
+    let descriptionKey: String
+
+    var title: String {
+        String(localized: String.LocalizationValue(titleKey))
+    }
+
+    var subtitle: String {
+        String(localized: String.LocalizationValue(subtitleKey))
+    }
+
+    var description: String {
+        String(localized: String.LocalizationValue(descriptionKey))
+    }
 
     static let allChapters: [Chapter] = [
         Chapter(
             id: 1,
-            title: "MLX 소개",
-            subtitle: "Introduction",
+            titleKey: "chapter.1.title",
+            subtitleKey: "chapter.1.subtitle",
             icon: "sparkles",
-            description: "MLX 프레임워크 소개와 Apple Silicon에서의 머신러닝을 알아봅니다."
+            descriptionKey: "chapter.1.description"
         ),
         Chapter(
             id: 2,
-            title: "배열 기초",
-            subtitle: "MLXArray Basics",
+            titleKey: "chapter.2.title",
+            subtitleKey: "chapter.2.subtitle",
             icon: "square.grid.3x3",
-            description: "MLXArray를 사용하여 배열을 생성하고 기본 연산을 수행합니다."
+            descriptionKey: "chapter.2.description"
         ),
         Chapter(
             id: 3,
-            title: "배열 연산",
-            subtitle: "Array Operations",
+            titleKey: "chapter.3.title",
+            subtitleKey: "chapter.3.subtitle",
             icon: "function",
-            description: "수학 연산, 브로드캐스팅, 리듀스 연산을 학습합니다."
+            descriptionKey: "chapter.3.description"
         ),
         Chapter(
             id: 4,
-            title: "디바이스 관리",
-            subtitle: "Device Management",
+            titleKey: "chapter.4.title",
+            subtitleKey: "chapter.4.subtitle",
             icon: "cpu",
-            description: "CPU와 GPU 간 연산 및 통합 메모리 모델을 이해합니다."
+            descriptionKey: "chapter.4.description"
         ),
         Chapter(
             id: 5,
-            title: "자동 미분",
-            subtitle: "Automatic Differentiation",
+            titleKey: "chapter.5.title",
+            subtitleKey: "chapter.5.subtitle",
             icon: "chart.line.uptrend.xyaxis",
-            description: "grad 함수를 사용한 자동 미분과 역전파를 학습합니다."
+            descriptionKey: "chapter.5.description"
         ),
         Chapter(
             id: 6,
-            title: "신경망 기초",
-            subtitle: "MLXNN Basics",
+            titleKey: "chapter.6.title",
+            subtitleKey: "chapter.6.subtitle",
             icon: "brain",
-            description: "MLXNN 모듈을 사용하여 기본 신경망 레이어를 구성합니다."
+            descriptionKey: "chapter.6.description"
         ),
         Chapter(
             id: 7,
-            title: "활성화 & 손실 함수",
-            subtitle: "Activation & Loss",
+            titleKey: "chapter.7.title",
+            subtitleKey: "chapter.7.subtitle",
             icon: "waveform.path.ecg",
-            description: "ReLU, Softmax 등 활성화 함수와 손실 함수를 학습합니다."
+            descriptionKey: "chapter.7.description"
         ),
         Chapter(
             id: 8,
-            title: "옵티마이저",
-            subtitle: "Optimizers",
+            titleKey: "chapter.8.title",
+            subtitleKey: "chapter.8.subtitle",
             icon: "dial.low",
-            description: "SGD, Adam 등 옵티마이저를 사용하여 모델을 학습합니다."
+            descriptionKey: "chapter.8.description"
         ),
         Chapter(
             id: 9,
-            title: "모델 저장/로드",
-            subtitle: "Save & Load",
+            titleKey: "chapter.9.title",
+            subtitleKey: "chapter.9.subtitle",
             icon: "arrow.down.doc",
-            description: "학습된 모델의 가중치를 저장하고 불러옵니다."
+            descriptionKey: "chapter.9.description"
         ),
         Chapter(
             id: 10,
-            title: "MNIST 분류기",
-            subtitle: "MNIST Classifier",
+            titleKey: "chapter.10.title",
+            subtitleKey: "chapter.10.subtitle",
             icon: "number",
-            description: "실전 예제: MNIST 손글씨 숫자 분류 모델을 학습합니다."
+            descriptionKey: "chapter.10.description"
         ),
         Chapter(
             id: 11,
-            title: "LLM 텍스트 생성",
-            subtitle: "Text Generation",
+            titleKey: "chapter.11.title",
+            subtitleKey: "chapter.11.subtitle",
             icon: "text.bubble",
-            description: "MLX-LM을 사용하여 대형 언어 모델로 텍스트를 생성합니다."
+            descriptionKey: "chapter.11.description"
         ),
         Chapter(
             id: 12,
-            title: "VLM 이미지 분석",
-            subtitle: "Vision Language Model",
+            titleKey: "chapter.12.title",
+            subtitleKey: "chapter.12.subtitle",
             icon: "eye",
-            description: "비전 언어 모델을 사용하여 이미지를 분석합니다."
+            descriptionKey: "chapter.12.description"
         ),
         Chapter(
             id: 13,
-            title: "LoRA 파인튜닝",
-            subtitle: "Low-Rank Adaptation",
+            titleKey: "chapter.13.title",
+            subtitleKey: "chapter.13.subtitle",
             icon: "slider.horizontal.3",
-            description: "LoRA를 사용하여 모델을 효율적으로 파인튜닝합니다."
+            descriptionKey: "chapter.13.description"
         ),
         Chapter(
             id: 14,
-            title: "이미지 생성",
-            subtitle: "Stable Diffusion",
+            titleKey: "chapter.14.title",
+            subtitleKey: "chapter.14.subtitle",
             icon: "photo.artframe",
-            description: "Stable Diffusion을 사용하여 이미지를 생성합니다."
+            descriptionKey: "chapter.14.description"
         ),
         Chapter(
             id: 15,
-            title: "생태계 & 다음 단계",
-            subtitle: "Ecosystem & Next Steps",
+            titleKey: "chapter.15.title",
+            subtitleKey: "chapter.15.subtitle",
             icon: "apple.logo",
-            description: "MLX 생태계와 추가 학습 리소스를 안내합니다."
+            descriptionKey: "chapter.15.description"
         )
     ]
 }

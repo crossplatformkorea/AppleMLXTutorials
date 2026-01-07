@@ -26,28 +26,28 @@ struct Chapter13View: View {
 
     private var descriptionSection: some View {
         VStack(alignment: .leading, spacing: 16) {
-            Label("개요", systemImage: "info.circle")
+            Label("Overview", systemImage: "info.circle")
                 .font(.title2.bold())
 
             Text("""
-            **LoRA (Low-Rank Adaptation)**는 대형 모델을 효율적으로 파인튜닝하는 기법입니다.
+            **LoRA (Low-Rank Adaptation)** is a technique for efficiently fine-tuning large models.
 
-            **LoRA 원리:**
-            • 전체 가중치 대신 저랭크 행렬만 학습
-            • W' = W + BA (B: d×r, A: r×k, r << min(d,k))
-            • 원본 모델 가중치는 고정
+            **LoRA Principle:**
+            - Learn only low-rank matrices instead of all weights
+            - W' = W + BA (B: d x r, A: r x k, r << min(d,k))
+            - Original model weights remain frozen
 
-            **장점:**
-            • **메모리 효율** - 전체 파인튜닝의 1/10 메모리
-            • **빠른 학습** - 학습 파라미터 수 대폭 감소
-            • **모델 병합** - 여러 LoRA를 조합 가능
-            • **저장 용량** - LoRA 어댑터만 저장 (수 MB)
+            **Advantages:**
+            - **Memory Efficient** - 1/10 memory of full fine-tuning
+            - **Fast Training** - Significantly fewer trainable parameters
+            - **Model Merging** - Can combine multiple LoRAs
+            - **Storage** - Only save LoRA adapter (few MBs)
 
-            **활용 사례:**
-            • 도메인 특화 (의료, 법률, 금융)
-            • 스타일 조정 (격식체, 친근체)
-            • 언어 적응 (한국어 강화)
-            • 특정 태스크 (코드 생성, 요약)
+            **Use Cases:**
+            - Domain specialization (medical, legal, finance)
+            - Style adjustment (formal, casual)
+            - Language adaptation (Korean enhancement)
+            - Specific tasks (code generation, summarization)
             """)
             .font(.body)
             .textSelection(.enabled)
@@ -58,7 +58,7 @@ struct Chapter13View: View {
 
     private var codeSection: some View {
         VStack(alignment: .leading, spacing: 16) {
-            Label("코드 예제", systemImage: "chevron.left.forwardslash.chevron.right")
+            Label("Code Example", systemImage: "chevron.left.forwardslash.chevron.right")
                 .font(.title2.bold())
 
             Text("**1. LoRA 설정 및 적용:**")

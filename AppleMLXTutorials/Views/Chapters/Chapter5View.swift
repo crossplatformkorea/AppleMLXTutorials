@@ -1,7 +1,7 @@
 import SwiftUI
 import MLX
 
-/// Chapter 5: 자동 미분
+/// Chapter 5: Automatic Differentiation
 struct Chapter5View: View {
     @State private var output: String = ""
     @State private var isRunning = false
@@ -23,28 +23,28 @@ struct Chapter5View: View {
 
     private var descriptionSection: some View {
         VStack(alignment: .leading, spacing: 16) {
-            Label("개요", systemImage: "info.circle")
+            Label("Overview", systemImage: "info.circle")
                 .font(.title2.bold())
 
             Text("""
-            **자동 미분(Automatic Differentiation)**은 딥러닝의 핵심입니다.
-            MLX는 함수 변환을 통해 그래디언트를 자동으로 계산합니다.
+            **Automatic Differentiation** is at the core of deep learning.
+            MLX automatically computes gradients through function transforms.
 
-            **핵심 개념:**
-            • **grad** - 함수의 그래디언트(미분)를 계산하는 함수 반환
-            • **valueAndGrad** - 함수값과 그래디언트를 동시에 반환
-            • **역전파** - 출력에서 입력 방향으로 그래디언트 전파
+            **Key Concepts:**
+            • **grad** - Returns a function that computes the gradient (derivative)
+            • **valueAndGrad** - Returns both function value and gradient simultaneously
+            • **Backpropagation** - Gradient propagation from output to input
 
-            **사용 예시:**
-            • 손실 함수의 그래디언트 계산
-            • 신경망 가중치 업데이트
-            • 최적화 알고리즘 구현
+            **Use Cases:**
+            • Computing gradients of loss functions
+            • Updating neural network weights
+            • Implementing optimization algorithms
 
-            **수학적 배경:**
-            f(x) = x² 이면
+            **Mathematical Background:**
+            If f(x) = x², then
             f'(x) = 2x
 
-            MLX의 grad가 이를 자동으로 계산합니다.
+            MLX's grad computes this automatically.
             """)
             .font(.body)
             .textSelection(.enabled)
@@ -55,10 +55,10 @@ struct Chapter5View: View {
 
     private var codeSection: some View {
         VStack(alignment: .leading, spacing: 16) {
-            Label("코드 예제", systemImage: "chevron.left.forwardslash.chevron.right")
+            Label("Code Example", systemImage: "chevron.left.forwardslash.chevron.right")
                 .font(.title2.bold())
 
-            Text("**기본 그래디언트 계산:**")
+            Text("**Basic Gradient Computation:**")
                 .font(.headline)
 
             CodeBlockView(code: """
@@ -78,7 +78,7 @@ struct Chapter5View: View {
                 print(gradient)  // 6.0
                 """)
 
-            Text("**값과 그래디언트 동시 계산:**")
+            Text("**Computing Value and Gradient Simultaneously:**")
                 .font(.headline)
                 .padding(.top, 8)
 
@@ -98,7 +98,7 @@ struct Chapter5View: View {
                 print("f'(5) = \\(grad)")    // 6.0 (= 2*(5-2))
                 """)
 
-            Text("**다변수 함수의 그래디언트:**")
+            Text("**Gradients of Multivariable Functions:**")
                 .font(.headline)
                 .padding(.top, 8)
 
@@ -127,12 +127,12 @@ struct Chapter5View: View {
 
     private var runSection: some View {
         VStack(alignment: .leading, spacing: 16) {
-            Label("실행 결과", systemImage: "play.circle")
+            Label("Run Result", systemImage: "play.circle")
                 .font(.title2.bold())
 
             HStack(spacing: 16) {
                 Button(action: runExample) {
-                    Label("실행", systemImage: "play.fill")
+                    Label("Run", systemImage: "play.fill")
                 }
                 .buttonStyle(.borderedProminent)
                 .disabled(isRunning)
@@ -145,7 +145,7 @@ struct Chapter5View: View {
 
             GroupBox {
                 if output.isEmpty {
-                    Text("실행 버튼을 눌러 결과를 확인하세요.")
+                    Text("Press the Run button to see results.")
                         .foregroundStyle(.secondary)
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .padding()

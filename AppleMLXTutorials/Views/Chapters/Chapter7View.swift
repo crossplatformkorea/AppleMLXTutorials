@@ -24,30 +24,30 @@ struct Chapter7View: View {
 
     private var descriptionSection: some View {
         VStack(alignment: .leading, spacing: 16) {
-            Label("개요", systemImage: "info.circle")
+            Label("Overview", systemImage: "info.circle")
                 .font(.title2.bold())
 
             Text("""
-            **활성화 함수**와 **손실 함수**는 신경망의 핵심 구성 요소입니다.
+            **Activation functions** and **loss functions** are core components of neural networks.
 
-            **활성화 함수:**
-            비선형성을 추가하여 신경망이 복잡한 패턴을 학습할 수 있게 합니다.
-            • **ReLU** - max(0, x), 가장 많이 사용
-            • **GELU** - Transformer에서 주로 사용
+            **Activation Functions:**
+            Add non-linearity to enable neural networks to learn complex patterns.
+            • **ReLU** - max(0, x), most commonly used
+            • **GELU** - Primarily used in Transformers
             • **SiLU/Swish** - x * sigmoid(x)
-            • **Sigmoid** - 출력을 0~1로 압축
-            • **Softmax** - 확률 분포로 변환
+            • **Sigmoid** - Compresses output to 0~1
+            • **Softmax** - Converts to probability distribution
 
-            **손실 함수:**
-            모델의 예측과 실제값의 차이를 측정합니다.
-            • **MSE** - 회귀 문제
-            • **Cross-Entropy** - 분류 문제
-            • **Binary Cross-Entropy** - 이진 분류
+            **Loss Functions:**
+            Measure the difference between model predictions and actual values.
+            • **MSE** - Regression problems
+            • **Cross-Entropy** - Classification problems
+            • **Binary Cross-Entropy** - Binary classification
 
-            **손실 함수 선택 가이드:**
-            • 회귀 → MSE, MAE
-            • 이진 분류 → Binary Cross-Entropy
-            • 다중 분류 → Cross-Entropy (with Softmax)
+            **Loss Function Selection Guide:**
+            • Regression → MSE, MAE
+            • Binary classification → Binary Cross-Entropy
+            • Multi-class classification → Cross-Entropy (with Softmax)
             """)
             .font(.body)
             .textSelection(.enabled)
@@ -58,7 +58,7 @@ struct Chapter7View: View {
 
     private var codeSection: some View {
         VStack(alignment: .leading, spacing: 16) {
-            Label("코드 예제", systemImage: "chevron.left.forwardslash.chevron.right")
+            Label("Code Example", systemImage: "chevron.left.forwardslash.chevron.right")
                 .font(.title2.bold())
 
             Text("**활성화 함수:**")
@@ -149,12 +149,12 @@ struct Chapter7View: View {
 
     private var runSection: some View {
         VStack(alignment: .leading, spacing: 16) {
-            Label("실행 결과", systemImage: "play.circle")
+            Label("Run Result", systemImage: "play.circle")
                 .font(.title2.bold())
 
             HStack(spacing: 16) {
                 Button(action: runExample) {
-                    Label("실행", systemImage: "play.fill")
+                    Label("Run", systemImage: "play.fill")
                 }
                 .buttonStyle(.borderedProminent)
                 .disabled(isRunning)
@@ -167,7 +167,7 @@ struct Chapter7View: View {
 
             GroupBox {
                 if output.isEmpty {
-                    Text("실행 버튼을 눌러 결과를 확인하세요.")
+                    Text("Press the Run button to see results.")
                         .foregroundStyle(.secondary)
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .padding()
