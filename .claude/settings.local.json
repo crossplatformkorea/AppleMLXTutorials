@@ -11,7 +11,16 @@
       "Bash(git remote add:*)",
       "Bash(git remote set-url:*)",
       "Bash(git add:*)",
-      "Bash(git commit:*)"
+      "Bash(git commit:*)",
+      "Bash(git push:*)",
+      "Bash(gh release create:*)",
+      "Bash(/usr/bin/ditto:*)",
+      "Bash(xcrun notarytool submit:*)",
+      "Bash(security find-generic-password:*)",
+      "Bash(cat:*)",
+      "Bash(security dump-keychain:*)",
+      "Bash(xcrun stapler staple:*)",
+      "Bash(gh release delete:*)"
     ]
   }
 }
