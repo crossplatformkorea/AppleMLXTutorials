@@ -167,8 +167,8 @@ struct Chapter3View: View {
             var result = ""
 
             // 산술 연산
-            let a = MLXArray([1.0, 2.0, 3.0, 4.0])
-            let b = MLXArray([2.0, 2.0, 2.0, 2.0])
+            let a = MLXArray([1.0, 2.0, 3.0, 4.0] as [Float])
+            let b = MLXArray([2.0, 2.0, 2.0, 2.0] as [Float])
 
             result += "== 산술 연산 ==\n"
             result += "a = \(a)\n"
@@ -180,7 +180,7 @@ struct Chapter3View: View {
 
             // 수학 함수
             result += "== 수학 함수 ==\n"
-            let x = MLXArray([1.0, 4.0, 9.0, 16.0])
+            let x = MLXArray([1.0, 4.0, 9.0, 16.0] as [Float])
             result += "x = \(x)\n"
             result += "sqrt(x) = \(sqrt(x))\n"
             result += "log(x) = \(log(x))\n"
@@ -188,7 +188,7 @@ struct Chapter3View: View {
 
             // 집계 연산
             result += "== 집계 연산 ==\n"
-            let matrix = MLXArray([1.0, 2.0, 3.0, 4.0, 5.0, 6.0]).reshaped([2, 3])
+            let matrix = MLXArray([1.0, 2.0, 3.0, 4.0, 5.0, 6.0] as [Float]).reshaped([2, 3])
             result += "matrix:\n\(matrix)\n"
             result += "sum() = \(matrix.sum())\n"
             result += "mean() = \(matrix.mean())\n"

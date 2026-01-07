@@ -199,7 +199,7 @@ struct Chapter6View: View {
 
             // 2. 활성화 함수
             result += "== 활성화 함수 ==\n"
-            let x = MLXArray([-2.0, -1.0, 0.0, 1.0, 2.0])
+            let x = MLXArray([-2.0, -1.0, 0.0, 1.0, 2.0] as [Float])
             result += "입력: \(x)\n"
             result += "ReLU: \(relu(x))\n"
             result += "Sigmoid: \(sigmoid(x))\n"

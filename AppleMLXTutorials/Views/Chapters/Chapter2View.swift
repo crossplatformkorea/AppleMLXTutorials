@@ -143,11 +143,11 @@ struct Chapter2View: View {
             var result = ""
 
             // 1. 기본 배열 생성
-            let a = MLXArray([1.0, 2.0, 3.0, 4.0])
+            let a = MLXArray([1.0, 2.0, 3.0, 4.0] as [Float])
             result += "1D 배열: \(a)\n"
 
             // 2. 2D 배열 (행렬)
-            let matrix = MLXArray([1.0, 2.0, 3.0, 4.0, 5.0, 6.0]).reshaped([2, 3])
+            let matrix = MLXArray([1.0, 2.0, 3.0, 4.0, 5.0, 6.0] as [Float]).reshaped([2, 3])
             result += "2D 행렬:\n\(matrix)\n"
             result += "  shape: \(matrix.shape)\n"
             result += "  ndim: \(matrix.ndim)\n"
@@ -169,7 +169,7 @@ struct Chapter2View: View {
             result += "Range [0, 5): \(range)\n\n"
 
             // 5. 데이터 타입 변환
-            let floats = MLXArray([1.0, 2.0, 3.0])
+            let floats = MLXArray([1.0, 2.0, 3.0] as [Float])
             result += "Float32 배열: \(floats)\n"
             result += "dtype: \(floats.dtype)"
 

@@ -343,9 +343,10 @@ struct Chapter14View: View {
                         lastXt = xt
                         stepCount += 1
 
+                        let currentStep = stepCount
                         Task { @MainActor in
-                            generationSteps = stepCount
-                            generationProgress = Double(stepCount) / Double(totalSteps)
+                            generationSteps = currentStep
+                            generationProgress = Double(currentStep) / Double(totalSteps)
                         }
                     }
 

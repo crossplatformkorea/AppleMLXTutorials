@@ -193,7 +193,7 @@ struct Chapter7View: View {
 
             // 활성화 함수 비교
             result += "== 활성화 함수 비교 ==\n"
-            let x = MLXArray([-2.0, -1.0, 0.0, 1.0, 2.0])
+            let x = MLXArray([-2.0, -1.0, 0.0, 1.0, 2.0] as [Float])
             result += "입력 x: \(x)\n\n"
 
             let reluOut = relu(x)
@@ -218,7 +218,7 @@ struct Chapter7View: View {
 
             // Softmax
             result += "== Softmax ==\n"
-            let logits = MLXArray([1.0, 2.0, 3.0, 4.0])
+            let logits = MLXArray([1.0, 2.0, 3.0, 4.0] as [Float])
             let probs = softmax(logits)
             eval(probs)
             result += "Logits: \(logits)\n"
@@ -227,8 +227,8 @@ struct Chapter7View: View {
 
             // MSE Loss
             result += "== MSE Loss ==\n"
-            let predictions = MLXArray([1.0, 2.0, 3.0, 4.0])
-            let targets = MLXArray([1.1, 2.2, 2.9, 3.8])
+            let predictions = MLXArray([1.0, 2.0, 3.0, 4.0] as [Float])
+            let targets = MLXArray([1.1, 2.2, 2.9, 3.8] as [Float])
             let mse = mean(square(predictions - targets))
             eval(mse)
             result += "예측: \(predictions)\n"
@@ -237,7 +237,7 @@ struct Chapter7View: View {
 
             // Cross-Entropy 데모
             result += "== Cross-Entropy 개념 ==\n"
-            let classLogits = MLXArray([2.0, 1.0, 0.1, 0.5, 2.5, 0.3]).reshaped([2, 3])
+            let classLogits = MLXArray([2.0, 1.0, 0.1, 0.5, 2.5, 0.3] as [Float]).reshaped([2, 3])
             let classProbs = softmax(classLogits, axis: -1)
             eval(classProbs)
             result += "Logits:\n\(classLogits)\n"

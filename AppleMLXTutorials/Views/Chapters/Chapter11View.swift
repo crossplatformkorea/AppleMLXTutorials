@@ -295,7 +295,7 @@ struct Chapter11View: View {
                 )
 
                 // AsyncStream으로 토큰 생성
-                let stream = try model.generate(
+                let stream = try await model.generate(
                     input: lmInput,
                     parameters: parameters
                 )

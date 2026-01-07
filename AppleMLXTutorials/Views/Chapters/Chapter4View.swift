@@ -190,7 +190,7 @@ struct Chapter4View: View {
 
             // 지연 계산 데모
             result += "== 지연 계산 데모 ==\n"
-            let x = MLXArray([1.0, 2.0, 3.0])
+            let x = MLXArray([1.0, 2.0, 3.0] as [Float])
             let y = x * 2
             let z = y + 1
             result += "x = \(x)\n"
