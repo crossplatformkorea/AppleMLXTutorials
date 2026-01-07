@@ -58,7 +58,7 @@ final class StableDiffusionManager: ObservableObject {
     }
 }
 
-/// Chapter 14: 이미지 생성 (Stable Diffusion)
+/// Chapter 14: Image Generation (Stable Diffusion)
 struct Chapter14View: View {
     @StateObject private var modelManager = StableDiffusionManager.shared
     @State private var prompt: String = "A beautiful sunset over mountains, digital art style"
@@ -112,10 +112,10 @@ struct Chapter14View: View {
 
     private var modelSection: some View {
         VStack(alignment: .leading, spacing: 16) {
-            Label("1. 모델 다운로드", systemImage: "cpu")
+            Label("1. Download Model", systemImage: "cpu")
                 .font(.title2.bold())
 
-            Text("**SDXL Turbo** - 빠른 이미지 생성 (~5GB)")
+            Text("**SDXL Turbo** - Fast image generation (~5GB)")
                 .font(.caption)
                 .foregroundStyle(.secondary)
 
@@ -156,11 +156,11 @@ struct Chapter14View: View {
 
     private var promptSection: some View {
         VStack(alignment: .leading, spacing: 16) {
-            Label("2. 프롬프트 입력", systemImage: "text.bubble")
+            Label("2. Enter Prompt", systemImage: "text.bubble")
                 .font(.title2.bold())
 
             VStack(alignment: .leading, spacing: 8) {
-                Text("Prompt (원하는 이미지 설명)")
+                Text("Prompt (Describe the image you want)")
                     .font(.caption)
                     .foregroundStyle(.secondary)
 
@@ -175,7 +175,7 @@ struct Chapter14View: View {
             }
 
             VStack(alignment: .leading, spacing: 8) {
-                Text("Negative Prompt (제외할 요소)")
+                Text("Negative Prompt (Elements to exclude)")
                     .font(.caption)
                     .foregroundStyle(.secondary)
 
@@ -189,7 +189,7 @@ struct Chapter14View: View {
                     .disabled(!modelManager.isLoaded || isGenerating)
             }
 
-            // 예시 프롬프트 버튼들
+            // Example Prompt Buttons
             HStack(spacing: 8) {
                 Text("Examples:")
                     .font(.caption)
@@ -244,7 +244,7 @@ struct Chapter14View: View {
     private var outputSection: some View {
         VStack(alignment: .leading, spacing: 16) {
             HStack {
-                Label("3. 생성 결과", systemImage: "photo")
+                Label("3. Generated Result", systemImage: "photo")
                     .font(.title2.bold())
 
                 Spacer()

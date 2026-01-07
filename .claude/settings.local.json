@@ -26,7 +26,9 @@
       "Bash(create-dmg:*)",
       "Bash(\"AppleMLXTutorials.dmg\" )",
       "Bash(\"build/Build/Products/Release/AppleMLXTutorials.app\")",
-      "Bash(gh release:*)"
+      "Bash(gh release:*)",
+      "Bash(security find-identity:*)",
+      "Bash(\"/Users/hyo/Github/crossplatformkorea/AppleMLXTutorials/build/Build/Products/Release/AppleMLXTutorials.app\")"
     ]
   }
 }

@@ -2,7 +2,7 @@ import SwiftUI
 import MLX
 import MLXNN
 
-/// Chapter 9: 모델 저장/로드
+/// Chapter 9: Model Save/Load
 struct Chapter9View: View {
     @State private var output: String = ""
     @State private var isRunning = false

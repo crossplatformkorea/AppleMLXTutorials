@@ -4,7 +4,7 @@ import MLXLLM
 import MLXLMCommon
 import MLXOptimizers
 
-/// Chapter 13: LoRA 파인튜닝
+/// Chapter 13: LoRA Fine-tuning
 struct Chapter13View: View {
     @State private var output: String = ""
     @State private var isRunning = false

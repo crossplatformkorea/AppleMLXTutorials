@@ -21,12 +21,12 @@ final class VLMManager: ObservableObject {
     private init() {}
 
     func loadModel(configuration: ModelConfiguration) async {
-        // 같은 모델이 이미 로드되어 있으면 스킵
+        // Skip if same model is already loaded
         if isLoaded && currentModelName == configuration.name {
             return
         }
 
-        // 다른 모델이면 리셋
+        // Reset if different model
         if currentModelName != configuration.name {
             modelContainer = nil
             isLoaded = false
@@ -59,7 +59,7 @@ final class VLMManager: ObservableObject {
     }
 }
 
-/// Chapter 12: VLM 이미지 분석
+/// Chapter 12: VLM Image Analysis
 struct Chapter12View: View {
     @StateObject private var vlmManager = VLMManager.shared
     @State private var selectedImage: NSImage?
@@ -69,9 +69,9 @@ struct Chapter12View: View {
     @State private var selectedModelIndex: Int = 0
 
     private let modelOptions: [(name: String, config: ModelConfiguration, description: String)] = [
-        ("SmolVLM 4bit", VLMRegistry.smolvlminstruct4bit, "~1GB - 가벼운 VLM (추천)"),
-        ("Qwen2-VL 2B", VLMRegistry.qwen2VL2BInstruct4Bit, "~2GB - 범용 VLM"),
-        ("FastVLM 0.5B", VLMRegistry.fastvlm, "~500MB - 초고속 VLM"),
+        ("SmolVLM 4bit", VLMRegistry.smolvlminstruct4bit, "~1GB - Lightweight VLM (Recommended)"),
+        ("Qwen2-VL 2B", VLMRegistry.qwen2VL2BInstruct4Bit, "~2GB - General Purpose VLM"),
+        ("FastVLM 0.5B", VLMRegistry.fastvlm, "~500MB - Ultra-fast VLM"),
     ]
 
     var body: some View {
@@ -120,10 +120,10 @@ struct Chapter12View: View {
 
     private var modelSection: some View {
         VStack(alignment: .leading, spacing: 16) {
-            Label("1. 모델 선택 및 다운로드", systemImage: "cpu")
+            Label("1. Model Selection & Download", systemImage: "cpu")
                 .font(.title2.bold())
 
-            Picker("모델 선택", selection: $selectedModelIndex) {
+            Picker("Select Model", selection: $selectedModelIndex) {
                 ForEach(0..<modelOptions.count, id: \.self) { index in
                     Text(modelOptions[index].name).tag(index)
                 }
@@ -173,7 +173,7 @@ struct Chapter12View: View {
 
     private var imageSection: some View {
         VStack(alignment: .leading, spacing: 16) {
-            Label("2. 이미지 선택", systemImage: "photo")
+            Label("2. Select Image", systemImage: "photo")
                 .font(.title2.bold())
 
             HStack(spacing: 16) {
@@ -184,7 +184,7 @@ struct Chapter12View: View {
                 .disabled(!vlmManager.isLoaded || isGenerating)
 
                 Button(action: useSampleImage) {
-                    Label("샘플 이미지", systemImage: "photo.on.rectangle")
+                    Label("Sample Image", systemImage: "photo.on.rectangle")
                 }
                 .buttonStyle(.bordered)
                 .disabled(!vlmManager.isLoaded || isGenerating)
@@ -224,7 +224,7 @@ struct Chapter12View: View {
 
     private var promptSection: some View {
         VStack(alignment: .leading, spacing: 16) {
-            Label("3. 질문 입력", systemImage: "text.bubble")
+            Label("3. Enter Question", systemImage: "text.bubble")
                 .font(.title2.bold())
 
             TextEditor(text: $prompt)
@@ -290,7 +290,7 @@ struct Chapter12View: View {
     private var outputSection: some View {
         VStack(alignment: .leading, spacing: 16) {
             HStack {
-                Label("4. 분석 결과", systemImage: "doc.text")
+                Label("4. Analysis Result", systemImage: "doc.text")
                     .font(.title2.bold())
 
                 Spacer()
@@ -355,21 +355,21 @@ struct Chapter12View: View {
     }
 
     private func useSampleImage() {
-        // 앱 아이콘을 샘플 이미지로 사용
+        // Use app icon as sample image
         if let iconURL = Bundle.main.url(forResource: "AppIcon", withExtension: "icns"),
            let icon = NSImage(contentsOf: iconURL) {
             selectedImage = icon
         } else {
-            // 시스템 이미지 생성
+            // Create system image
             let size = NSSize(width: 256, height: 256)
             let image = NSImage(size: size)
             image.lockFocus()
 
-            // 배경
+            // Background
             NSColor.systemBlue.setFill()
             NSBezierPath(rect: NSRect(origin: .zero, size: size)).fill()
 
-            // 텍스트
+            // Text
             let text = "MLX"
             let attributes: [NSAttributedString.Key: Any] = [
                 .font: NSFont.boldSystemFont(ofSize: 72),
@@ -399,12 +399,12 @@ struct Chapter12View: View {
         output = ""
 
         let currentPrompt = prompt
-        // CGImage를 CIImage로 변환
+        // Convert CGImage to CIImage
         let ciImage = CIImage(cgImage: cgImage)
 
         Task {
             do {
-                // UserInput에 이미지와 프롬프트 설정
+                // Set image and prompt in UserInput
                 let userInput = UserInput(
                     prompt: currentPrompt,
                     images: [.ciImage(ciImage)]
@@ -418,7 +418,7 @@ struct Chapter12View: View {
                     topP: 0.9
                 )
 
-                // 스트리밍 생성
+                // Streaming generation
                 let stream = try container.generate(
                     input: input,
                     parameters: parameters
