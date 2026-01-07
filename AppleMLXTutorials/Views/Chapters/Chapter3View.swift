@@ -70,13 +70,13 @@ struct Chapter3View: View {
                 let a = MLXArray([1.0, 2.0, 3.0, 4.0])
                 let b = MLXArray([2.0, 2.0, 2.0, 2.0])
 
-                // 기본 연산
+                // Basic operations
                 let sum = a + b          // [3, 4, 5, 6]
                 let diff = a - b         // [-1, 0, 1, 2]
                 let prod = a * b         // [2, 4, 6, 8]
                 let quot = a / b         // [0.5, 1, 1.5, 2]
 
-                // 스칼라 연산
+                // Scalar operations
                 let scaled = a * 2       // [2, 4, 6, 8]
                 let shifted = a + 10     // [11, 12, 13, 14]
                 """)
@@ -91,9 +91,9 @@ struct Chapter3View: View {
                 let sqrtX = sqrt(x)      // [1, 2, 3, 4]
                 let expX = exp(x)        // e^x
                 let logX = log(x)        // ln(x)
-                let absX = abs(x)        // 절대값
+                let absX = abs(x)        // absolute value
 
-                // 삼각함수
+                // Trigonometric functions
                 let angles = MLXArray([0.0, Float.pi/2, Float.pi])
                 let sinX = sin(angles)   // [0, 1, 0]
                 """)
@@ -105,17 +105,17 @@ struct Chapter3View: View {
             CodeBlockView(code: """
                 let arr = MLXArray([[1, 2, 3], [4, 5, 6]])
 
-                // 전체 집계
+                // Full aggregation
                 let total = arr.sum()           // 21
                 let average = arr.mean()        // 3.5
 
-                // 축(axis)별 집계
+                // Aggregation by axis
                 let colSum = arr.sum(axis: 0)   // [5, 7, 9]
                 let rowSum = arr.sum(axis: 1)   // [6, 15]
 
-                // 최대/최소
+                // Max/Min
                 let maxVal = arr.max()          // 6
-                let argMax = arr.argMax()       // 최대값 인덱스
+                let argMax = arr.argMax()       // index of max value
                 """)
         }
     }
@@ -166,11 +166,11 @@ struct Chapter3View: View {
         Task {
             var result = ""
 
-            // 산술 연산
+            // Arithmetic Operations
             let a = MLXArray([1.0, 2.0, 3.0, 4.0] as [Float])
             let b = MLXArray([2.0, 2.0, 2.0, 2.0] as [Float])
 
-            result += "== 산술 연산 ==\n"
+            result += "== Arithmetic Operations ==\n"
             result += "a = \(a)\n"
             result += "b = \(b)\n"
             result += "a + b = \(a + b)\n"
@@ -178,16 +178,16 @@ struct Chapter3View: View {
             result += "a / b = \(a / b)\n"
             result += "a * 3 = \(a * 3)\n\n"
 
-            // 수학 함수
-            result += "== 수학 함수 ==\n"
+            // Math Functions
+            result += "== Math Functions ==\n"
             let x = MLXArray([1.0, 4.0, 9.0, 16.0] as [Float])
             result += "x = \(x)\n"
             result += "sqrt(x) = \(sqrt(x))\n"
             result += "log(x) = \(log(x))\n"
             result += "square(x) = \(square(x))\n\n"
 
-            // 집계 연산
-            result += "== 집계 연산 ==\n"
+            // Aggregation Operations
+            result += "== Aggregation Operations ==\n"
             let matrix = MLXArray([1.0, 2.0, 3.0, 4.0, 5.0, 6.0] as [Float]).reshaped([2, 3])
             result += "matrix:\n\(matrix)\n"
             result += "sum() = \(matrix.sum())\n"
@@ -197,8 +197,8 @@ struct Chapter3View: View {
             result += "sum(axis: 0) = \(matrix.sum(axis: 0))\n"
             result += "sum(axis: 1) = \(matrix.sum(axis: 1))\n\n"
 
-            // 형태 변환
-            result += "== 형태 변환 ==\n"
+            // Shape Transformation
+            result += "== Shape Transformation ==\n"
             let flat = matrix.flattened()
             result += "flatten: \(flat)\n"
             let reshaped = flat.reshaped([3, 2])

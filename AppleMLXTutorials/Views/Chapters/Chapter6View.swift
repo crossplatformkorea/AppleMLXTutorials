@@ -60,26 +60,26 @@ struct Chapter6View: View {
             Label("Code Example", systemImage: "chevron.left.forwardslash.chevron.right")
                 .font(.title2.bold())
 
-            Text("**Linear 레이어:**")
+            Text("**Linear Layer:**")
                 .font(.headline)
 
             CodeBlockView(code: """
                 import MLX
                 import MLXNN
 
-                // Linear 레이어 생성 (입력 4, 출력 2)
+                // Create Linear layer (input 4, output 2)
                 let linear = Linear(4, 2)
 
-                // 순전파
-                let input = MLXArray.ones([1, 4])  // 배치 1, 피처 4
+                // Forward pass
+                let input = MLXArray.ones([1, 4])  // batch 1, features 4
                 let output = linear(input)        // [1, 2]
 
-                // 파라미터 확인
+                // Check parameters
                 let params = linear.parameters()
                 print(params)
                 """)
 
-            Text("**간단한 MLP 모델:**")
+            Text("**Simple MLP Model:**")
                 .font(.headline)
                 .padding(.top, 8)
 
@@ -87,7 +87,7 @@ struct Chapter6View: View {
                 import MLX
                 import MLXNN
 
-                // MLP 모델 정의
+                // Define MLP model
                 class MLP: Module, UnaryLayer {
                     let fc1: Linear
                     let fc2: Linear
@@ -109,17 +109,17 @@ struct Chapter6View: View {
                     }
                 }
 
-                // 모델 생성
+                // Create model
                 let model = MLP(inputDim: 784, hiddenDim: 256, outputDim: 10)
 
-                // 입력 데이터
-                let x = MLXRandom.normal([32, 784])  // 배치 32
+                // Input data
+                let x = MLXRandom.normal([32, 784])  // batch 32
 
-                // 순전파
+                // Forward pass
                 let output = model(x)  // [32, 10]
                 """)
 
-            Text("**Embedding 레이어:**")
+            Text("**Embedding Layer:**")
                 .font(.headline)
                 .padding(.top, 8)
 
@@ -127,13 +127,13 @@ struct Chapter6View: View {
                 import MLX
                 import MLXNN
 
-                // 임베딩 레이어: vocab 1000, dim 128
+                // Embedding layer: vocab 1000, dim 128
                 let embedding = Embedding(embeddingCount: 1000, dimensions: 128)
 
-                // 토큰 인덱스
+                // Token indices
                 let tokens = MLXArray([1, 5, 10, 20])
 
-                // 임베딩 조회
+                // Embedding lookup
                 let embedded = embedding(tokens)  // [4, 128]
                 """)
         }
@@ -185,30 +185,30 @@ struct Chapter6View: View {
         Task {
             var result = ""
 
-            // 1. Linear 레이어
-            result += "== Linear 레이어 ==\n"
+            // 1. Linear Layer
+            result += "== Linear Layer ==\n"
             let linear = Linear(4, 2)
-            let input = MLXArray.ones([2, 4])  // 배치 2, 피처 4
+            let input = MLXArray.ones([2, 4])  // batch 2, features 4
             let linearOutput = linear(input)
             eval(linearOutput)
 
-            result += "입력 shape: \(input.shape)\n"
+            result += "Input shape: \(input.shape)\n"
             result += "Linear(4 -> 2)\n"
-            result += "출력 shape: \(linearOutput.shape)\n"
-            result += "출력:\n\(linearOutput)\n\n"
+            result += "Output shape: \(linearOutput.shape)\n"
+            result += "Output:\n\(linearOutput)\n\n"
 
-            // 2. 활성화 함수
-            result += "== 활성화 함수 ==\n"
+            // 2. Activation Functions
+            result += "== Activation Functions ==\n"
             let x = MLXArray([-2.0, -1.0, 0.0, 1.0, 2.0] as [Float])
-            result += "입력: \(x)\n"
+            result += "Input: \(x)\n"
             result += "ReLU: \(relu(x))\n"
             result += "Sigmoid: \(sigmoid(x))\n"
             result += "Tanh: \(tanh(x))\n\n"
 
-            // 3. 간단한 MLP
-            result += "== 간단한 MLP ==\n"
+            // 3. Simple MLP
+            result += "== Simple MLP ==\n"
 
-            // Sequential 대신 직접 레이어 조합
+            // Combine layers directly instead of Sequential
             let fc1 = Linear(4, 8)
             let fc2 = Linear(8, 2)
 
@@ -218,10 +218,10 @@ struct Chapter6View: View {
             let mlpOutput = fc2(h)
             eval(mlpOutput)
 
-            result += "MLP 구조: 4 -> 8 -> 2\n"
-            result += "입력 shape: \(mlpInput.shape)\n"
-            result += "출력 shape: \(mlpOutput.shape)\n"
-            result += "출력:\n\(mlpOutput)\n\n"
+            result += "MLP Structure: 4 -> 8 -> 2\n"
+            result += "Input shape: \(mlpInput.shape)\n"
+            result += "Output shape: \(mlpOutput.shape)\n"
+            result += "Output:\n\(mlpOutput)\n\n"
 
             // 4. Embedding
             result += "== Embedding ==\n"
@@ -231,8 +231,8 @@ struct Chapter6View: View {
             eval(embedded)
 
             result += "Vocab size: 100, Embedding dim: 16\n"
-            result += "토큰: \(tokens)\n"
-            result += "임베딩 shape: \(embedded.shape)\n"
+            result += "Tokens: \(tokens)\n"
+            result += "Embedding shape: \(embedded.shape)\n"
 
             await MainActor.run {
                 output = result

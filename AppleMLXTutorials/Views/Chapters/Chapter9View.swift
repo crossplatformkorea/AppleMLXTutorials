@@ -61,25 +61,25 @@ struct Chapter9View: View {
             Label("Code Example", systemImage: "chevron.left.forwardslash.chevron.right")
                 .font(.title2.bold())
 
-            Text("**모델 파라미터 저장:**")
+            Text("**Save Model Parameters:**")
                 .font(.headline)
 
             CodeBlockView(code: """
                 import MLX
                 import MLXNN
 
-                // 모델 생성 및 학습
+                // Create and train model
                 let model = Linear(10, 2)
 
-                // 파라미터를 딕셔너리로 추출
+                // Extract parameters as dictionary
                 let params = model.parameters()
 
-                // safetensors 형식으로 저장
+                // Save in safetensors format
                 let url = URL(fileURLWithPath: "/path/to/model.safetensors")
                 try save(arrays: params.flattened(), url: url)
                 """)
 
-            Text("**모델 파라미터 로드:**")
+            Text("**Load Model Parameters:**")
                 .font(.headline)
                 .padding(.top, 8)
 
@@ -87,18 +87,18 @@ struct Chapter9View: View {
                 import MLX
                 import MLXNN
 
-                // 새 모델 인스턴스 생성
+                // Create new model instance
                 let model = Linear(10, 2)
 
-                // 저장된 파라미터 로드
+                // Load saved parameters
                 let url = URL(fileURLWithPath: "/path/to/model.safetensors")
                 let loadedParams = try loadArrays(url: url)
 
-                // 모델에 파라미터 적용
+                // Apply parameters to model
                 try model.update(parameters: ModuleParameters.unflattened(loadedParams))
                 """)
 
-            Text("**체크포인트 저장:**")
+            Text("**Save Checkpoint:**")
                 .font(.headline)
                 .padding(.top, 8)
 
@@ -107,7 +107,7 @@ struct Chapter9View: View {
                 import MLXNN
                 import MLXOptimizers
 
-                // 학습 상태 저장
+                // Save training state
                 func saveCheckpoint(
                     model: Module,
                     optimizer: Adam,
@@ -116,19 +116,19 @@ struct Chapter9View: View {
                 ) throws {
                     var checkpoint: [String: MLXArray] = [:]
 
-                    // 모델 파라미터
+                    // Model parameters
                     for (key, value) in model.parameters().flattened() {
                         checkpoint["model.\\(key)"] = value
                     }
 
-                    // 에폭 번호
+                    // Epoch number
                     checkpoint["epoch"] = MLXArray(Int32(epoch))
 
                     let url = URL(fileURLWithPath: path)
                     try save(arrays: checkpoint, url: url)
                 }
 
-                // 학습 상태 로드
+                // Load training state
                 func loadCheckpoint(
                     model: Module,
                     path: String
@@ -136,7 +136,7 @@ struct Chapter9View: View {
                     let url = URL(fileURLWithPath: path)
                     let checkpoint = try loadArrays(url: url)
 
-                    // 모델 파라미터 복원
+                    // Restore model parameters
                     var modelParams: [String: MLXArray] = [:]
                     for (key, value) in checkpoint {
                         if key.hasPrefix("model.") {
@@ -148,7 +148,7 @@ struct Chapter9View: View {
                         parameters: ModuleParameters.unflattened(modelParams)
                     )
 
-                    // 에폭 복원
+                    // Restore epoch
                     let epoch = checkpoint["epoch"]!.item(Int32.self)
                     return Int(epoch)
                 }
@@ -202,73 +202,73 @@ struct Chapter9View: View {
         Task {
             var result = ""
 
-            // 모델 생성
-            result += "== 모델 파라미터 저장/로드 데모 ==\n\n"
+            // Create Model
+            result += "== Model Parameter Save/Load Demo ==\n\n"
 
             let model1 = Linear(4, 2)
-            result += "1. 원본 모델 생성\n"
-            result += "구조: Linear(4 -> 2)\n\n"
+            result += "1. Create Original Model\n"
+            result += "Structure: Linear(4 -> 2)\n\n"
 
-            // 원본 파라미터 확인
+            // Check Original Parameters
             let originalParams = model1.parameters()
             eval(originalParams)
-            result += "원본 파라미터:\n"
+            result += "Original Parameters:\n"
             for (key, value) in originalParams.flattened() {
                 result += "  \(key): shape=\(value.shape)\n"
             }
 
-            // 테스트 입력으로 출력 확인
+            // Check Output with Test Input
             let testInput = MLXArray.ones([1, 4])
             let originalOutput = model1(testInput)
             eval(originalOutput)
-            result += "\n테스트 출력: \(originalOutput)\n\n"
+            result += "\nTest Output: \(originalOutput)\n\n"
 
-            // 임시 파일에 저장
+            // Save to Temporary File
             let tempDir = FileManager.default.temporaryDirectory
             let savePath = tempDir.appendingPathComponent("test_model.safetensors")
 
             do {
-                // 저장 - flattened()는 [(String, MLXArray)]를 반환하므로 딕셔너리로 변환
+                // Save - flattened() returns [(String, MLXArray)] so convert to dictionary
                 let paramsDict = Dictionary(uniqueKeysWithValues: originalParams.flattened())
                 try save(arrays: paramsDict, url: savePath)
-                result += "2. 모델 저장됨: \(savePath.lastPathComponent)\n\n"
+                result += "2. Model Saved: \(savePath.lastPathComponent)\n\n"
 
-                // 새 모델 생성
+                // Create New Model
                 let model2 = Linear(4, 2)
-                result += "3. 새 모델 생성\n"
+                result += "3. Create New Model\n"
 
-                // 저장된 파라미터 확인 전
+                // Check Before Loading Parameters
                 let newOutput1 = model2(testInput)
                 eval(newOutput1)
-                result += "로드 전 출력: \(newOutput1)\n"
+                result += "Output Before Load: \(newOutput1)\n"
 
-                // 파라미터 로드
+                // Load Parameters
                 let loadedParams = try loadArrays(url: savePath)
                 model2.update(parameters: ModuleParameters.unflattened(loadedParams))
-                result += "4. 파라미터 로드됨\n\n"
+                result += "4. Parameters Loaded\n\n"
 
-                // 로드 후 출력 확인
+                // Check Output After Load
                 let newOutput2 = model2(testInput)
                 eval(newOutput2)
-                result += "로드 후 출력: \(newOutput2)\n\n"
+                result += "Output After Load: \(newOutput2)\n\n"
 
-                // 비교
+                // Compare
                 let diff = abs(originalOutput - newOutput2).sum()
                 eval(diff)
-                result += "원본과 차이: \(diff)\n"
-                result += "→ 차이가 0이면 파라미터가 정확히 복원됨\n\n"
+                result += "Difference from Original: \(diff)\n"
+                result += "→ If difference is 0, parameters are exactly restored\n\n"
 
-                // 정리
+                // Cleanup
                 try? FileManager.default.removeItem(at: savePath)
 
             } catch {
-                result += "오류: \(error.localizedDescription)\n"
+                result += "Error: \(error.localizedDescription)\n"
             }
 
-            result += "== 지원 형식 ==\n"
-            result += "• .safetensors - 권장 (안전, 빠름)\n"
-            result += "• .npz - NumPy 호환\n"
-            result += "• .gguf - LLM 모델용"
+            result += "== Supported Formats ==\n"
+            result += "• .safetensors - Recommended (safe, fast)\n"
+            result += "• .npz - NumPy compatible\n"
+            result += "• .gguf - For LLM models"
 
             await MainActor.run {
                 output = result

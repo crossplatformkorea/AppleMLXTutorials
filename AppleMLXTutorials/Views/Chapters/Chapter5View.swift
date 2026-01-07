@@ -64,15 +64,15 @@ struct Chapter5View: View {
             CodeBlockView(code: """
                 import MLX
 
-                // f(x) = x^2 함수 정의
+                // Define f(x) = x^2 function
                 func f(_ x: MLXArray) -> MLXArray {
-                    return x * x  // 또는 square(x)
+                    return x * x  // or square(x)
                 }
 
-                // 그래디언트 함수 생성
+                // Create gradient function
                 let df = grad(f)
 
-                // x = 3에서 그래디언트 계산
+                // Compute gradient at x = 3
                 let x = MLXArray(3.0)
                 let gradient = df(x)  // 2 * 3 = 6
                 print(gradient)  // 6.0
@@ -89,7 +89,7 @@ struct Chapter5View: View {
                     return (x - 2) * (x - 2)  // (x-2)²
                 }
 
-                // 값과 그래디언트를 동시에 계산
+                // Compute value and gradient simultaneously
                 let lossAndGrad = valueAndGrad(loss)
                 let x = MLXArray(5.0)
                 let (value, grad) = lossAndGrad(x)
@@ -112,7 +112,7 @@ struct Chapter5View: View {
                     return x * x + y * y
                 }
 
-                // 모든 파라미터에 대한 그래디언트
+                // Gradient with respect to all parameters
                 let gradF = grad(f)
 
                 let params = [MLXArray(3.0), MLXArray(4.0)]
@@ -169,12 +169,12 @@ struct Chapter5View: View {
         Task {
             var result = ""
 
-            // 1. 기본 그래디언트: f(x) = x²
-            result += "== 기본 그래디언트 ==\n"
+            // 1. Basic Gradient: f(x) = x²
+            result += "== Basic Gradient ==\n"
             result += "f(x) = x²\n"
             result += "f'(x) = 2x\n\n"
 
-            // grad는 ([MLXArray]) -> [MLXArray] 시그니처를 사용
+            // grad uses ([MLXArray]) -> [MLXArray] signature
             let gradSquare = grad { arrays in
                 let x = arrays[0]
                 return [x * x]
@@ -187,8 +187,8 @@ struct Chapter5View: View {
                 result += "f'(\(Int(val))) = \(grads[0])\n"
             }
 
-            // 2. 값과 그래디언트 동시 계산
-            result += "\n== 값과 그래디언트 동시 계산 ==\n"
+            // 2. Computing Value and Gradient Simultaneously
+            result += "\n== Value and Gradient Computation ==\n"
             result += "f(x) = (x - 2)²\n"
             result += "f'(x) = 2(x - 2)\n\n"
 
@@ -205,11 +205,11 @@ struct Chapter5View: View {
                 result += "x=\(Int(val)): f(x)=\(values[0]), f'(x)=\(grads[0])\n"
             }
 
-            // 3. 간단한 경사하강법
-            result += "\n== 간단한 경사하강법 ==\n"
-            result += "목표: f(x) = (x-5)² 최소화\n"
-            result += "시작점: x = 0\n"
-            result += "학습률: 0.1\n\n"
+            // 3. Simple Gradient Descent
+            result += "\n== Simple Gradient Descent ==\n"
+            result += "Goal: Minimize f(x) = (x-5)²\n"
+            result += "Starting point: x = 0\n"
+            result += "Learning rate: 0.1\n\n"
 
             let gradObj = grad { arrays in
                 let x = arrays[0]
@@ -234,7 +234,7 @@ struct Chapter5View: View {
                 }
             }
 
-            result += "\n최종 x ≈ 5.0 (최소점에 수렴)"
+            result += "\nFinal x ≈ 5.0 (converged to minimum)"
 
             await MainActor.run {
                 output = result

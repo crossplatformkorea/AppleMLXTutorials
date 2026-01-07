@@ -62,15 +62,15 @@ struct Chapter4View: View {
             CodeBlockView(code: """
                 import MLX
 
-                // 현재 기본 디바이스 확인
+                // Check current default device
                 let defaultDevice = Device.defaultDevice()
-                print(defaultDevice)  // gpu 또는 cpu
+                print(defaultDevice)  // gpu or cpu
 
-                // 기본 디바이스 설정
+                // Set default device
                 Device.setDefault(device: .gpu)
 
-                // 특정 디바이스에서 배열 생성
-                let gpuArray = MLXArray([1, 2, 3])  // 기본 디바이스(GPU)
+                // Create array on specific device
+                let gpuArray = MLXArray([1, 2, 3])  // default device (GPU)
                 """)
 
             Text("**Streams and Synchronization:**")
@@ -80,15 +80,15 @@ struct Chapter4View: View {
             CodeBlockView(code: """
                 import MLX
 
-                // 기본 스트림 사용
+                // Use default stream
                 let a = MLXArray([1, 2, 3])
                 let b = MLXArray([4, 5, 6])
                 let c = a + b
 
-                // 계산 실행 및 동기화
-                eval(c)  // 지연된 계산을 실행
+                // Execute computation and synchronize
+                eval(c)  // execute lazy computation
 
-                // 여러 배열 동시 평가
+                // Evaluate multiple arrays at once
                 eval(a, b, c)
                 """)
 
@@ -99,17 +99,17 @@ struct Chapter4View: View {
             CodeBlockView(code: """
                 import MLX
 
-                // 대용량 배열 생성
+                // Create large array
                 let large = MLXArray.zeros([1000, 1000])
 
-                // 계산 수행
+                // Perform computation
                 let result = large * 2
 
-                // 명시적 평가로 메모리 할당
+                // Allocate memory with explicit evaluation
                 eval(result)
 
-                // 배열이 스코프를 벗어나면 자동 해제
-                // Swift의 ARC가 메모리 관리
+                // Automatically released when array goes out of scope
+                // Swift's ARC manages memory
                 """)
         }
     }
@@ -160,13 +160,13 @@ struct Chapter4View: View {
         Task {
             var result = ""
 
-            // 디바이스 정보
-            result += "== 디바이스 정보 ==\n"
+            // Device Info
+            result += "== Device Info ==\n"
             let defaultDevice = Device.defaultDevice()
-            result += "기본 디바이스: \(defaultDevice)\n\n"
+            result += "Default Device: \(defaultDevice)\n\n"
 
-            // GPU 연산 테스트
-            result += "== GPU 연산 테스트 ==\n"
+            // GPU Operation Test
+            result += "== GPU Operation Test ==\n"
             let size = 1000
             let a = MLXArray.ones([size, size])
             let b = MLXArray.ones([size, size])
@@ -176,29 +176,29 @@ struct Chapter4View: View {
             eval(c)
             let gpuTime = CFAbsoluteTimeGetCurrent() - startTime
 
-            result += "행렬 크기: \(size) x \(size)\n"
-            result += "행렬 곱셈 시간: \(String(format: "%.4f", gpuTime))초\n"
-            result += "결과 shape: \(c.shape)\n"
-            result += "결과 합계: \(c.sum())\n\n"
+            result += "Matrix Size: \(size) x \(size)\n"
+            result += "Matrix Multiplication Time: \(String(format: "%.4f", gpuTime))s\n"
+            result += "Result shape: \(c.shape)\n"
+            result += "Result sum: \(c.sum())\n\n"
 
-            // 메모리 효율성 데모
-            result += "== 통합 메모리 데모 ==\n"
-            result += "Apple Silicon 통합 메모리 아키텍처:\n"
-            result += "• CPU와 GPU가 동일한 메모리 공유\n"
-            result += "• 데이터 복사 오버헤드 없음\n"
-            result += "• 시스템 전체 메모리를 ML에 활용 가능\n\n"
+            // Unified Memory Demo
+            result += "== Unified Memory Demo ==\n"
+            result += "Apple Silicon Unified Memory Architecture:\n"
+            result += "• CPU and GPU share the same memory\n"
+            result += "• No data copy overhead\n"
+            result += "• Entire system memory available for ML\n\n"
 
-            // 지연 계산 데모
-            result += "== 지연 계산 데모 ==\n"
+            // Lazy Evaluation Demo
+            result += "== Lazy Evaluation Demo ==\n"
             let x = MLXArray([1.0, 2.0, 3.0] as [Float])
             let y = x * 2
             let z = y + 1
             result += "x = \(x)\n"
-            result += "y = x * 2 (아직 계산 안됨)\n"
-            result += "z = y + 1 (아직 계산 안됨)\n"
-            eval(z)  // 여기서 모든 계산이 한번에 실행
-            result += "eval(z) 호출 후: \(z)\n"
-            result += "→ 계산 그래프가 최적화되어 한번에 실행됨"
+            result += "y = x * 2 (not computed yet)\n"
+            result += "z = y + 1 (not computed yet)\n"
+            eval(z)  // All computations execute here at once
+            result += "After eval(z): \(z)\n"
+            result += "→ Computation graph optimized and executed at once"
 
             await MainActor.run {
                 output = result

@@ -60,23 +60,23 @@ struct Chapter2View: View {
             CodeBlockView(code: """
                 import MLX
 
-                // 1. Swift 배열에서 생성
+                // 1. Create from Swift arrays
                 let a = MLXArray([1, 2, 3, 4])
                 let b = MLXArray([1.0, 2.0, 3.0])
 
-                // 2. 2차원 배열 (행렬)
+                // 2. 2D array (matrix)
                 let matrix = MLXArray([
                     [1, 2, 3],
                     [4, 5, 6]
                 ])
 
-                // 3. 특수 배열 생성
-                let zeros = MLXArray.zeros([3, 3])           // 3x3 영행렬
-                let ones = MLXArray.ones([2, 4])             // 2x4 일행렬
-                let identity = MLXArray.identity(3)          // 3x3 단위행렬
+                // 3. Create special arrays
+                let zeros = MLXArray.zeros([3, 3])           // 3x3 zero matrix
+                let ones = MLXArray.ones([2, 4])             // 2x4 ones matrix
+                let identity = MLXArray.identity(3)          // 3x3 identity matrix
                 let range = MLXArray(0 ..< 10)               // [0, 1, ..., 9]
 
-                // 4. 데이터 타입 지정
+                // 4. Specify data type
                 let floats = MLXArray([1, 2, 3], dtype: .float32)
                 let ints = MLXArray([1.5, 2.5], dtype: .int32)  // [1, 2]
                 """)
@@ -88,10 +88,10 @@ struct Chapter2View: View {
             CodeBlockView(code: """
                 let arr = MLXArray([[1, 2, 3], [4, 5, 6]])
 
-                arr.shape       // [2, 3] - 형태
-                arr.ndim        // 2 - 차원 수
-                arr.size        // 6 - 전체 요소 수
-                arr.dtype       // .int32 - 데이터 타입
+                arr.shape       // [2, 3] - shape
+                arr.ndim        // 2 - number of dimensions
+                arr.size        // 6 - total element count
+                arr.dtype       // .int32 - data type
                 """)
         }
     }
@@ -144,11 +144,11 @@ struct Chapter2View: View {
 
             // 1. 기본 배열 생성
             let a = MLXArray([1.0, 2.0, 3.0, 4.0] as [Float])
-            result += "1D 배열: \(a)\n"
+            result += "1D Array: \(a)\n"
 
-            // 2. 2D 배열 (행렬)
+            // 2. 2D Array (Matrix)
             let matrix = MLXArray([1.0, 2.0, 3.0, 4.0, 5.0, 6.0] as [Float]).reshaped([2, 3])
-            result += "2D 행렬:\n\(matrix)\n"
+            result += "2D Matrix:\n\(matrix)\n"
             result += "  shape: \(matrix.shape)\n"
             result += "  ndim: \(matrix.ndim)\n"
             result += "  size: \(matrix.size)\n"
@@ -170,7 +170,7 @@ struct Chapter2View: View {
 
             // 5. 데이터 타입 변환
             let floats = MLXArray([1.0, 2.0, 3.0] as [Float])
-            result += "Float32 배열: \(floats)\n"
+            result += "Float32 Array: \(floats)\n"
             result += "dtype: \(floats.dtype)"
 
             await MainActor.run {

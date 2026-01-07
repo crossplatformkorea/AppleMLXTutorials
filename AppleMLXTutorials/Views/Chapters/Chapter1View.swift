@@ -77,7 +77,7 @@ struct Chapter1View: View {
                     )
                 ]
 
-                // 타겟에 의존성 추가
+                // Add dependencies to target
                 .target(
                     name: "YourApp",
                     dependencies: [
@@ -96,15 +96,15 @@ struct Chapter1View: View {
             CodeBlockView(code: """
                 import MLX
 
-                // 배열 생성
+                // Create arrays
                 let a = MLXArray([1, 2, 3, 4])
                 let b = MLXArray([5, 6, 7, 8])
 
-                // 배열 연산
+                // Array operations
                 let sum = a + b
                 let product = a * b
 
-                // 결과 확인 (지연 계산이 여기서 실행됨)
+                // Check results (lazy evaluation executes here)
                 print(sum)  // [6, 8, 10, 12]
                 print(product)  // [5, 12, 21, 32]
                 """)

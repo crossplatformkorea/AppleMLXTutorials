@@ -61,7 +61,7 @@ struct Chapter8View: View {
             Label("Code Example", systemImage: "chevron.left.forwardslash.chevron.right")
                 .font(.title2.bold())
 
-            Text("**기본 옵티마이저 사용:**")
+            Text("**Basic Optimizer Usage:**")
                 .font(.headline)
 
             CodeBlockView(code: """
@@ -69,17 +69,17 @@ struct Chapter8View: View {
                 import MLXNN
                 import MLXOptimizers
 
-                // 모델 생성
+                // Create model
                 let model = Linear(10, 2)
 
-                // 옵티마이저 생성
+                // Create optimizer
                 let optimizer = SGD(learningRate: 0.01)
-                // 또는
+                // or
                 let adamOptimizer = Adam(learningRate: 0.001)
 
-                // 학습 루프
+                // Training loop
                 func trainStep(x: MLXArray, y: MLXArray) {
-                    // 손실 함수와 그래디언트 계산
+                    // Compute loss function and gradient
                     let lossAndGrad = valueAndGrad(model) { model in
                         let pred = model(x)
                         return mean(square(pred - y))
@@ -87,32 +87,32 @@ struct Chapter8View: View {
 
                     let (loss, grads) = lossAndGrad(model)
 
-                    // 옵티마이저로 파라미터 업데이트
+                    // Update parameters with optimizer
                     optimizer.update(model: model, gradients: grads)
 
-                    // 계산 실행
+                    // Execute computation
                     eval(model, optimizer)
                 }
                 """)
 
-            Text("**Adam 옵티마이저:**")
+            Text("**Adam Optimizer:**")
                 .font(.headline)
                 .padding(.top, 8)
 
             CodeBlockView(code: """
                 import MLXOptimizers
 
-                // Adam 기본 설정
+                // Adam default settings
                 let adam = Adam(learningRate: 0.001)
 
-                // Adam 커스텀 설정
+                // Adam custom settings
                 let adamCustom = Adam(
                     learningRate: 0.001,
-                    betas: [0.9, 0.999],  // 모멘텀 계수
-                    eps: 1e-8             // 수치 안정성
+                    betas: [0.9, 0.999],  // momentum coefficients
+                    eps: 1e-8             // numerical stability
                 )
 
-                // AdamW (Weight Decay 포함)
+                // AdamW (with Weight Decay)
                 let adamW = AdamW(
                     learningRate: 0.001,
                     betas: [0.9, 0.999],
@@ -120,7 +120,7 @@ struct Chapter8View: View {
                 )
                 """)
 
-            Text("**전체 학습 루프:**")
+            Text("**Full Training Loop:**")
                 .font(.headline)
                 .padding(.top, 8)
 
@@ -129,11 +129,11 @@ struct Chapter8View: View {
                 import MLXNN
                 import MLXOptimizers
 
-                // 모델과 옵티마이저 설정
+                // Setup model and optimizer
                 let model = MLP(inputDim: 784, hiddenDim: 256, outputDim: 10)
                 let optimizer = Adam(learningRate: 0.001)
 
-                // 학습
+                // Training
                 for epoch in 0..<10 {
                     for (x, y) in dataLoader {
                         // Forward + Backward
@@ -141,7 +141,7 @@ struct Chapter8View: View {
                             crossEntropyLoss(m(x), y)
                         }(model)
 
-                        // 파라미터 업데이트
+                        // Update parameters
                         optimizer.update(model: model, gradients: grads)
                         eval(model, optimizer)
                     }
@@ -196,29 +196,29 @@ struct Chapter8View: View {
         Task {
             var result = ""
 
-            // 간단한 선형 회귀 예제
-            result += "== 선형 회귀 학습 ==\n"
-            result += "목표: y = 2x + 1 학습하기\n\n"
+            // Simple Linear Regression Example
+            result += "== Linear Regression Training ==\n"
+            result += "Goal: Learn y = 2x + 1\n\n"
 
-            // 데이터 생성
+            // Generate Data
             let xData = MLXArray(Array(stride(from: Float(0), to: 10, by: 0.5)))
             let yData = 2 * xData + 1 + MLXRandom.normal([xData.shape[0]]) * 0.1
 
-            // 모델 (y = wx + b)
+            // Model (y = wx + b)
             let model = Linear(1, 1)
 
-            // 옵티마이저 (데모용 - 실제 학습에서 사용)
+            // Optimizer (for demo - used in actual training)
             _ = SGD(learningRate: 0.01)
 
-            result += "초기 파라미터:\n"
+            result += "Initial Parameters:\n"
             let initParams = model.parameters()
             eval(initParams)
             result += "\(initParams)\n\n"
 
-            // 수동 학습 루프 (간단한 데모)
-            result += "학습 진행:\n"
+            // Manual Training Loop (simple demo)
+            result += "Training Progress:\n"
 
-            // 배치로 변환
+            // Convert to batch
             let x = xData.reshaped([-1, 1])
             let y = yData.reshaped([-1, 1])
 
@@ -227,8 +227,8 @@ struct Chapter8View: View {
                 let pred = model(x)
                 let loss = mean(square(pred - y))
 
-                // 간단한 수동 그래디언트 계산 (데모용)
-                // 실제 사용시에는 MLXNN의 Module과 함께 사용
+                // Simple manual gradient computation (for demo)
+                // In real usage, use with MLXNN's Module
                 eval(loss)
 
                 if epoch % 20 == 0 {
@@ -236,18 +236,18 @@ struct Chapter8View: View {
                 }
             }
 
-            result += "\n최종 파라미터:\n"
+            result += "\nFinal Parameters:\n"
             let finalParams = model.parameters()
             eval(finalParams)
             result += "\(finalParams)\n"
-            result += "\n참고: 실제 학습에서는 valueAndGrad와 optimizer.update를 사용합니다.\n\n"
+            result += "\nNote: In real training, use valueAndGrad and optimizer.update.\n\n"
 
-            // 옵티마이저 비교
-            result += "== 옵티마이저 종류 ==\n"
-            result += "• SGD: 기본적인 경사하강법\n"
-            result += "• Adam: 적응형 학습률 + 모멘텀\n"
+            // Optimizer Comparison
+            result += "== Optimizer Types ==\n"
+            result += "• SGD: Basic gradient descent\n"
+            result += "• Adam: Adaptive learning rate + momentum\n"
             result += "• AdamW: Adam + Weight Decay\n"
-            result += "• RMSprop: 이동평균 기반 적응형\n"
+            result += "• RMSprop: Moving average based adaptive\n"
 
             await MainActor.run {
                 output = result

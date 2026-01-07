@@ -65,7 +65,7 @@ struct Chapter10View: View {
             Label("Code Example", systemImage: "chevron.left.forwardslash.chevron.right")
                 .font(.title2.bold())
 
-            Text("**MLP 모델 정의:**")
+            Text("**Define MLP Model:**")
                 .font(.headline)
 
             CodeBlockView(code: """
@@ -84,16 +84,16 @@ struct Chapter10View: View {
                     }
 
                     func callAsFunction(_ x: MLXArray) -> MLXArray {
-                        var x = x.reshaped([-1, 784])  // 평탄화
+                        var x = x.reshaped([-1, 784])  // flatten
                         x = relu(fc1(x))
                         x = relu(fc2(x))
                         x = fc3(x)
-                        return x  // logits 반환
+                        return x  // return logits
                     }
                 }
                 """)
 
-            Text("**손실 함수:**")
+            Text("**Loss Function:**")
                 .font(.headline)
                 .padding(.top, 8)
 
@@ -105,13 +105,13 @@ struct Chapter10View: View {
                     // Softmax + Negative Log Likelihood
                     let logSoftmax = logits - logSumExp(logits, axis: -1, keepDims: true)
 
-                    // 정답 클래스의 log 확률만 선택
+                    // Select only log probability of correct class
                     let nll = -take(logSoftmax, labels.asType(.int32), axis: -1)
                     return mean(nll)
                 }
                 """)
 
-            Text("**학습 루프:**")
+            Text("**Training Loop:**")
                 .font(.headline)
                 .padding(.top, 8)
 
@@ -122,7 +122,7 @@ struct Chapter10View: View {
                 let optimizer = Adam(learningRate: 0.001)
 
                 for epoch in 0..<10 {
-                    // 미니배치 학습
+                    // Mini-batch training
                     for batch in dataLoader {
                         let (images, labels) = batch
 
@@ -132,12 +132,12 @@ struct Chapter10View: View {
                             return crossEntropyLoss(logits: logits, labels: labels)
                         }(model)
 
-                        // 파라미터 업데이트
+                        // Update parameters
                         optimizer.update(model: model, gradients: grads)
                         eval(model, optimizer)
                     }
 
-                    // 검증
+                    // Validation
                     let accuracy = evaluate(model, testData)
                     print("Epoch \\(epoch): Accuracy = \\(accuracy)")
                 }
@@ -158,7 +158,7 @@ struct Chapter10View: View {
 
             HStack(spacing: 16) {
                 Button(action: runExample) {
-                    Label("학습 시작", systemImage: "play.fill")
+                    Label("Start Training", systemImage: "play.fill")
                 }
                 .buttonStyle(.borderedProminent)
                 .disabled(isRunning)
@@ -198,9 +198,9 @@ struct Chapter10View: View {
         Task {
             var result = ""
 
-            result += "== MNIST 분류기 학습 (합성 데이터) ==\n\n"
+            result += "== MNIST Classifier Training (Synthetic Data) ==\n\n"
 
-            // 모델 정의
+            // Define Model
             let fc1 = Linear(784, 256)
             let fc2 = Linear(256, 128)
             let fc3 = Linear(128, 10)
@@ -212,63 +212,63 @@ struct Chapter10View: View {
                 return fc3(h)
             }
 
-            // 간단한 cross-entropy 구현
+            // Simple cross-entropy implementation
             func loss(logits: MLXArray, labels: MLXArray) -> MLXArray {
                 let maxLogit = logits.max(axis: -1, keepDims: true)
                 let shifted = logits - maxLogit
                 let logSumExp = log(sum(exp(shifted), axis: -1, keepDims: true))
                 let logSoftmax = shifted - logSumExp
 
-                // 간단히 평균 계산
+                // Simple mean calculation
                 return -mean(logSoftmax * oneHot(labels, numClasses: 10))
             }
 
             func oneHot(_ labels: MLXArray, numClasses: Int) -> MLXArray {
                 let n = labels.shape[0]
-                // 실제 구현에서는 scatter 사용
+                // In real implementation, use scatter
                 return MLXArray.zeros([n, numClasses])
             }
 
-            // 옵티마이저 (데모용 - 실제 학습에서 사용)
+            // Optimizer (for demo - used in actual training)
             _ = Adam(learningRate: 0.001)
 
-            result += "모델 구조:\n"
+            result += "Model Structure:\n"
             result += "  Input: 784\n"
             result += "  FC1: 784 -> 256 + ReLU\n"
             result += "  FC2: 256 -> 128 + ReLU\n"
             result += "  FC3: 128 -> 10\n\n"
 
-            // 합성 데이터로 학습 데모
+            // Training demo with synthetic data
             let batchSize = 32
             let numBatches = 10
             let epochs = 5
 
-            result += "학습 설정:\n"
-            result += "  배치 크기: \(batchSize)\n"
-            result += "  배치 수: \(numBatches)\n"
-            result += "  에폭: \(epochs)\n\n"
+            result += "Training Settings:\n"
+            result += "  Batch Size: \(batchSize)\n"
+            result += "  Num Batches: \(numBatches)\n"
+            result += "  Epochs: \(epochs)\n\n"
 
-            result += "학습 진행:\n"
+            result += "Training Progress:\n"
 
             for epoch in 0..<epochs {
                 var epochLoss: Float = 0
 
                 for batch in 0..<numBatches {
-                    // 합성 데이터 생성
+                    // Generate synthetic data
                     let x = MLXRandom.uniform(low: 0, high: 1, [batchSize, 784])
-                    _ = MLXRandom.randInt(low: 0, high: 10, [batchSize])  // fakeLabels (데모)
+                    _ = MLXRandom.randInt(low: 0, high: 10, [batchSize])  // fakeLabels (demo)
 
                     // Forward
                     let logits = forward(x)
 
-                    // 간단한 MSE 손실 (데모용)
+                    // Simple MSE loss (for demo)
                     let target = MLXRandom.uniform(low: 0, high: 1, [batchSize, 10])
                     let batchLoss = mean(square(softmax(logits) - target))
                     eval(batchLoss)
 
                     epochLoss += batchLoss.item(Float.self)
 
-                    // 진행률 업데이트
+                    // Update progress
                     let totalSteps = Float(epochs * numBatches)
                     let currentStep = Float(epoch * numBatches + batch + 1)
                     await MainActor.run {
@@ -284,13 +284,13 @@ struct Chapter10View: View {
                 }
             }
 
-            result += "\n학습 완료!\n\n"
-            result += "== 실제 MNIST 학습 ==\n"
-            result += "실제 MNIST 데이터로 학습하려면:\n"
-            result += "1. mlx-swift-examples 저장소의 MNISTTrainer 참고\n"
-            result += "2. MNIST 데이터셋 다운로드\n"
-            result += "3. 데이터 로더 구현\n"
-            result += "4. 전체 학습 루프 실행\n"
+            result += "\nTraining Complete!\n\n"
+            result += "== Real MNIST Training ==\n"
+            result += "To train with real MNIST data:\n"
+            result += "1. Refer to MNISTTrainer in mlx-swift-examples repository\n"
+            result += "2. Download MNIST dataset\n"
+            result += "3. Implement data loader\n"
+            result += "4. Run full training loop\n"
 
             await MainActor.run {
                 output = result

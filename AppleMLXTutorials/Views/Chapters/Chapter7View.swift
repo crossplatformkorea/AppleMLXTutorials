@@ -61,7 +61,7 @@ struct Chapter7View: View {
             Label("Code Example", systemImage: "chevron.left.forwardslash.chevron.right")
                 .font(.title2.bold())
 
-            Text("**활성화 함수:**")
+            Text("**Activation Functions:**")
                 .font(.headline)
 
             CodeBlockView(code: """
@@ -74,20 +74,20 @@ struct Chapter7View: View {
                 let reluOut = relu(x)  // [0, 0, 0, 1, 2]
 
                 // Leaky ReLU
-                let leakyOut = leakyRelu(x)  // 음수에서 작은 기울기
+                let leakyOut = leakyRelu(x)  // small slope for negatives
 
                 // GELU (Gaussian Error Linear Unit)
                 let geluOut = gelu(x)
 
                 // Sigmoid: 1 / (1 + e^-x)
-                let sigmoidOut = sigmoid(x)  // (0, 1) 범위
+                let sigmoidOut = sigmoid(x)  // range (0, 1)
 
-                // Softmax: 확률 분포로 변환
+                // Softmax: convert to probability distribution
                 let logits = MLXArray([1.0, 2.0, 3.0])
-                let probs = softmax(logits)  // 합이 1
+                let probs = softmax(logits)  // sum equals 1
                 """)
 
-            Text("**손실 함수:**")
+            Text("**Loss Functions:**")
                 .font(.headline)
                 .padding(.top, 8)
 
@@ -95,22 +95,22 @@ struct Chapter7View: View {
                 import MLX
                 import MLXNN
 
-                // MSE Loss (회귀)
+                // MSE Loss (regression)
                 let predictions = MLXArray([1.0, 2.0, 3.0])
                 let targets = MLXArray([1.5, 2.0, 2.5])
                 let mse = mean(square(predictions - targets))
 
-                // Cross-Entropy Loss (분류)
-                // logits: 모델 출력 [배치, 클래스]
-                // labels: 정답 인덱스 [배치]
+                // Cross-Entropy Loss (classification)
+                // logits: model output [batch, classes]
+                // labels: target indices [batch]
                 func crossEntropyLoss(logits: MLXArray, labels: MLXArray) -> MLXArray {
                     let logProbs = logSoftmax(logits, axis: -1)
-                    // labels를 one-hot으로 변환하여 계산
+                    // Convert labels to one-hot for computation
                     let loss = -mean(take(logProbs, labels, axis: -1))
                     return loss
                 }
 
-                // Binary Cross-Entropy (이진 분류)
+                // Binary Cross-Entropy (binary classification)
                 func binaryCrossEntropy(preds: MLXArray, targets: MLXArray) -> MLXArray {
                     let eps = MLXArray(1e-7)
                     let loss = -mean(
@@ -121,20 +121,20 @@ struct Chapter7View: View {
                 }
                 """)
 
-            Text("**손실 함수와 그래디언트:**")
+            Text("**Loss Functions and Gradients:**")
                 .font(.headline)
                 .padding(.top, 8)
 
             CodeBlockView(code: """
                 import MLX
 
-                // 손실 함수 정의
+                // Define loss function
                 func mseLoss(_ params: MLXArray, _ x: MLXArray, _ y: MLXArray) -> MLXArray {
                     let pred = params[0] * x + params[1]  // y = ax + b
                     return mean(square(pred - y))
                 }
 
-                // 그래디언트 계산
+                // Compute gradient
                 let gradLoss = grad { params in
                     mseLoss(params, x, y)
                 }
@@ -191,10 +191,10 @@ struct Chapter7View: View {
         Task {
             var result = ""
 
-            // 활성화 함수 비교
-            result += "== 활성화 함수 비교 ==\n"
+            // Activation Function Comparison
+            result += "== Activation Function Comparison ==\n"
             let x = MLXArray([-2.0, -1.0, 0.0, 1.0, 2.0] as [Float])
-            result += "입력 x: \(x)\n\n"
+            result += "Input x: \(x)\n\n"
 
             let reluOut = relu(x)
             eval(reluOut)
@@ -223,7 +223,7 @@ struct Chapter7View: View {
             eval(probs)
             result += "Logits: \(logits)\n"
             result += "Softmax: \(probs)\n"
-            result += "합계: \(probs.sum())\n\n"
+            result += "Sum: \(probs.sum())\n\n"
 
             // MSE Loss
             result += "== MSE Loss ==\n"
@@ -231,18 +231,18 @@ struct Chapter7View: View {
             let targets = MLXArray([1.1, 2.2, 2.9, 3.8] as [Float])
             let mse = mean(square(predictions - targets))
             eval(mse)
-            result += "예측: \(predictions)\n"
-            result += "정답: \(targets)\n"
+            result += "Predictions: \(predictions)\n"
+            result += "Targets: \(targets)\n"
             result += "MSE: \(mse)\n\n"
 
-            // Cross-Entropy 데모
-            result += "== Cross-Entropy 개념 ==\n"
+            // Cross-Entropy Demo
+            result += "== Cross-Entropy Concept ==\n"
             let classLogits = MLXArray([2.0, 1.0, 0.1, 0.5, 2.5, 0.3] as [Float]).reshaped([2, 3])
             let classProbs = softmax(classLogits, axis: -1)
             eval(classProbs)
             result += "Logits:\n\(classLogits)\n"
-            result += "확률 (softmax):\n\(classProbs)\n"
-            result += "→ 각 행의 최대값이 예측 클래스"
+            result += "Probabilities (softmax):\n\(classProbs)\n"
+            result += "→ Max value in each row is the predicted class"
 
             await MainActor.run {
                 output = result
