@@ -2,7 +2,7 @@ import SwiftUI
 import MLX
 import MLXNN
 
-/// Chapter 7: 활성화 함수 & 손실 함수
+/// Chapter 7: Activation Functions & Loss Functions
 struct Chapter7View: View {
     @State private var output: String = ""
     @State private var isRunning = false

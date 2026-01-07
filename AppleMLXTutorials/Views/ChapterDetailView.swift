@@ -8,12 +8,12 @@ struct ChapterDetailView: View {
 
     var body: some View {
         VStack(spacing: 0) {
-            // 커스텀 헤더
+            // Custom header
             chapterHeader
 
             Divider()
 
-            // 챕터 내용
+            // Chapter content
             chapterContent
         }
         .navigationTitle("")
@@ -26,12 +26,12 @@ struct ChapterDetailView: View {
             Text("Chapter \(chapter.id): \(chapter.title)")
                 .font(.title.bold())
 
-            // 복사 버튼 (hover 시에만 표시)
+            // Copy button (shown only on hover)
             if isHovering || showCopied {
                 Button(action: copyChapterCode) {
                     HStack(spacing: 4) {
                         Image(systemName: showCopied ? "checkmark" : "doc.on.doc")
-                        Text(showCopied ? "복사됨" : "복사")
+                        Text(showCopied ? "Copied" : "Copy")
                             .font(.caption)
                     }
                     .padding(.horizontal, 8)
@@ -93,9 +93,9 @@ struct ChapterDetailView: View {
                 Chapter15View()
             default:
                 ContentUnavailableView(
-                    "준비 중",
+                    "Coming Soon",
                     systemImage: "hammer",
-                    description: Text("이 챕터는 아직 준비 중입니다.")
+                    description: Text("This chapter is under development.")
                 )
             }
         }
@@ -113,7 +113,7 @@ struct ChapterDetailView: View {
             showCopied = true
         }
 
-        // 2초 후 복사됨 표시 숨기기
+        // Hide copied indicator after 2 seconds
         DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
             withAnimation(.easeInOut(duration: 0.2)) {
                 showCopied = false

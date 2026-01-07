@@ -3,7 +3,7 @@ import MLX
 import MLXNN
 import MLXOptimizers
 
-/// Chapter 8: 옵티마이저
+/// Chapter 8: Optimizers
 struct Chapter8View: View {
     @State private var output: String = ""
     @State private var isRunning = false

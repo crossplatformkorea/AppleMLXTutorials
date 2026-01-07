@@ -4,7 +4,7 @@ import MLXNN
 import MLXOptimizers
 import MLXRandom
 
-/// Chapter 10: MNIST 분류기
+/// Chapter 10: MNIST Classifier
 struct Chapter10View: View {
     @State private var output: String = ""
     @State private var isRunning = false

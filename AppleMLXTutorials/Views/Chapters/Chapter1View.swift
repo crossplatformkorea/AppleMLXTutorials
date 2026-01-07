@@ -10,17 +10,17 @@ struct Chapter1View: View {
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 24) {
-                // 설명 섹션
+                // Description Section
                 descriptionSection
 
                 Divider()
 
-                // 코드 예제 섹션
+                // Code Example Section
                 codeSection
 
                 Divider()
 
-                // 실행 섹션
+                // Run Section
                 runSection
             }
             .padding(24)
@@ -156,15 +156,15 @@ struct Chapter1View: View {
 
         Task {
             do {
-                // 기본 배열 테스트
+                // Basic array test
                 let a = MLXArray([1, 2, 3, 4])
                 let b = MLXArray([5, 6, 7, 8])
                 let sum = a + b
 
-                // 결과 평가 (지연 계산 실행)
+                // Evaluate result (execute lazy computation)
                 eval(sum)
 
-                // 디바이스 정보
+                // Device info
                 let device = Device.defaultDevice()
 
                 await MainActor.run {

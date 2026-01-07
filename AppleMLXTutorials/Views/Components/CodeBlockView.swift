@@ -1,6 +1,6 @@
 import SwiftUI
 
-/// 코드 블록을 표시하고 복사 기능을 제공하는 컴포넌트
+/// Component for displaying code blocks with copy functionality
 struct CodeBlockView: View {
     let code: String
     @State private var copied = false
@@ -8,13 +8,13 @@ struct CodeBlockView: View {
     var body: some View {
         GroupBox {
             VStack(spacing: 0) {
-                // 복사 버튼 헤더
+                // Copy button header
                 HStack {
                     Spacer()
                     Button(action: copyCode) {
                         HStack(spacing: 4) {
                             Image(systemName: copied ? "checkmark" : "doc.on.doc")
-                            Text(copied ? "복사됨" : "복사")
+                            Text(copied ? "Copied" : "Copy")
                                 .font(.caption)
                         }
                         .foregroundStyle(copied ? .green : .secondary)
@@ -24,7 +24,7 @@ struct CodeBlockView: View {
                 .padding(.horizontal, 12)
                 .padding(.top, 8)
 
-                // 코드 내용
+                // Code content
                 ScrollView(.horizontal) {
                     Text(code)
                         .font(.system(.body, design: .monospaced))

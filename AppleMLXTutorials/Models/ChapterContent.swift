@@ -1,6 +1,6 @@
 import Foundation
 
-/// 각 챕터의 복사 가능한 전체 내용을 제공합니다 (설명 + 코드)
+/// Provides copyable full content for each chapter (description + code)
 enum ChapterContent {
     static func getCode(for chapterId: Int) -> String {
         switch chapterId {

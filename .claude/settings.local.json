@@ -26,7 +26,21 @@
       "Bash(create-dmg:*)",
       "Bash(\"AppleMLXTutorials.dmg\" )",
       "Bash(\"build/Build/Products/Release/AppleMLXTutorials.app\")",
-      "Bash(gh release:*)"
+      "Bash(gh release:*)",
+      "Bash(security find-identity:*)",
+      "Bash(\"/Users/hyo/Github/crossplatformkorea/AppleMLXTutorials/build/Build/Products/Release/AppleMLXTutorials.app\")",
+      "Bash(hdiutil create:*)",
+      "Bash(hdiutil attach:*)",
+      "Bash(osascript:*)",
+      "Bash(sync)",
+      "Bash(hdiutil detach:*)",
+      "Bash(hdiutil convert:*)",
+      "Bash(lsof:*)",
+      "Bash(diskutil list:*)",
+      "Bash(diskutil unmount:*)",
+      "Bash(# Configure window using AppleScript\nosascript <<'APPLESCRIPT'\ntell application \"Finder\"\n    tell disk \"AppleMLXTutorials\"\n        open\n        set current view of container window to icon view\n        set toolbar visible of container window to false\n        set statusbar visible of container window to false\n        set the bounds of container window to {400, 100, 940, 480}\n        set viewOptions to the icon view options of container window\n        set arrangement of viewOptions to not arranged\n        set icon size of viewOptions to 128\n        set position of item \"AppleMLXTutorials.app\" of container window to {130, 170}\n        set position of item \"Applications\" of container window to {410, 170}\n        close\n        open\n        update without registering applications\n        delay 1\n        close\n    end tell\nend tell\nAPPLESCRIPT)",
+      "Bash(# Eject all AppleMLXTutorials disks for disk in disk18 disk19 disk20 disk21 disk22 disk23; do hdiutil detach $disk -force done echo \"\"All disks ejected\"\" # Check ls /Volumes/)",
+      "Bash(mount:*)"
     ]
   }
 }

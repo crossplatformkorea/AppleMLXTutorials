@@ -142,7 +142,7 @@ struct Chapter2View: View {
         Task {
             var result = ""
 
-            // 1. 기본 배열 생성
+            // 1. Basic Array Creation
             let a = MLXArray([1.0, 2.0, 3.0, 4.0] as [Float])
             result += "1D Array: \(a)\n"
 
@@ -154,7 +154,7 @@ struct Chapter2View: View {
             result += "  size: \(matrix.size)\n"
             result += "  dtype: \(matrix.dtype)\n\n"
 
-            // 3. 특수 배열
+            // 3. Special Arrays
             let zeros = MLXArray.zeros([2, 3])
             result += "Zeros (2x3):\n\(zeros)\n\n"
 
@@ -164,11 +164,11 @@ struct Chapter2View: View {
             let identity = MLXArray.identity(3)
             result += "Identity (3x3):\n\(identity)\n\n"
 
-            // 4. 범위 배열
+            // 4. Range Array
             let range = MLXArray(Array(0..<5).map { Float($0) })
             result += "Range [0, 5): \(range)\n\n"
 
-            // 5. 데이터 타입 변환
+            // 5. Data Type Conversion
             let floats = MLXArray([1.0, 2.0, 3.0] as [Float])
             result += "Float32 Array: \(floats)\n"
             result += "dtype: \(floats.dtype)"

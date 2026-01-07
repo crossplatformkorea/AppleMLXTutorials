@@ -2,7 +2,7 @@ import SwiftUI
 import MLX
 import MLXNN
 
-/// Chapter 6: 신경망 기초 (MLXNN)
+/// Chapter 6: Neural Network Basics (MLXNN)
 struct Chapter6View: View {
     @State private var output: String = ""
     @State private var isRunning = false

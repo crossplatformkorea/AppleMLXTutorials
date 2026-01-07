@@ -1,27 +1,27 @@
 import SwiftUI
 import MLX
 
-/// Chapter 15: 생태계 & 다음 단계
+/// Chapter 15: Ecosystem & Next Steps
 struct Chapter15View: View {
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 24) {
-                // MLX 생태계
+                // MLX Ecosystem
                 ecosystemSection
 
                 Divider()
 
-                // 공식 리소스
+                // Official Resources
                 resourcesSection
 
                 Divider()
 
-                // 다음 단계
+                // Next Steps
                 nextStepsSection
 
                 Divider()
 
-                // 커뮤니티
+                // Community
                 communitySection
             }
             .padding(24)
@@ -41,7 +41,7 @@ struct Chapter15View: View {
             """)
             .font(.body)
 
-            // 패키지 목록
+            // Package List
             VStack(alignment: .leading, spacing: 12) {
                 PackageCard(
                     name: "mlx",
